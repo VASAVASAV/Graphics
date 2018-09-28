@@ -15,9 +15,13 @@ namespace Lab1
         private Button button1;
         private PictureBox pictureBox1;
         Point center = new Point(0, 0);
-        Pen PentoUse = new Pen(Color.Red);
-        Pen CenterPen = new Pen(Color.Black);
-        Pen OldPen = new Pen(Color.Blue);
+        Pen PentoUse = new Pen(Color.Red,2);
+        Pen CenterPen = new Pen(Color.Black,4);
+        Pen OldPen = new Pen(Color.Blue,2);
+        Pen ToolPen = new Pen(Color.Green, 3);
+        bool isMoving = false;
+        Point StartMove;
+        DateTime temp = DateTime.Now;
 
         List<ObjTWW> figs = new List<ObjTWW>();
         private Button button2;
@@ -82,6 +86,10 @@ namespace Lab1
             this.pictureBox1.Size = new System.Drawing.Size(659, 456);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // MyProg
             // 
@@ -101,18 +109,31 @@ namespace Lab1
             int i, j;
             for (i = 0; i < figs.Count; i++)
             {
-                for (j = 0; j < figs[i].ps.Length; j++)
+                if (figs[i].ps.Length == 1)
                 {
-                    Pictgraph.DrawLine(PentoUse, figs[i].ps[j].X - 1, figs[i].ps[j].Y - 1, figs[i].ps[j].X + 1, figs[i].ps[j].Y + 1);
-                    Pictgraph.DrawLine(PentoUse, figs[i].ps[j].X - 1, figs[i].ps[j].Y + 1, figs[i].ps[j].X + 1, figs[i].ps[j].Y - 1);
+                    Pictgraph.DrawLine(PentoUse, figs[i].ps[0].X - 1, figs[i].ps[0].Y + 1, figs[i].ps[0].X + 1, figs[i].ps[0].Y - 1);
+                    Pictgraph.DrawLine(PentoUse, figs[i].ps[0].X - 1, figs[i].ps[0].Y - 1, figs[i].ps[0].X + 1, figs[i].ps[0].Y + 1);
+                }
+                else
+                {
+                    for (j = 0; j < figs[i].ps.Length - 1; j++)
+                    {
+                        Pictgraph.DrawLines(PentoUse, figs[i].ps);
+                    }
+                    if (figs[i].cycled == true)
+                    {
+                        Pictgraph.DrawLine(PentoUse, figs[i].ps[0], figs[i].ps[figs[i].ps.Length-1]);
+                    }
                 }
             }
+            Pictgraph.DrawLine(CenterPen, center.X - 15, center.Y, center.X + 15, center.Y);
+            Pictgraph.DrawLine(CenterPen, center.X, center.Y - 15, center.X, center.Y + 15);
         }
         public MyProg()
         {
             InitializeComponent();
             Pictgraph = pictureBox1.CreateGraphics();
-            figs.Add(new ObjTWW(new Point[] { new Point(5, 5), new Point(205, 205) }));
+            figs.Add(new ObjTWW(new Point[] { new Point(5, 5), new Point(205, 205), new Point(15, 205) },true));
         }
         private void Move(int xarg, int yarg)
         {
@@ -135,6 +156,36 @@ namespace Lab1
 
         private void button2_Click(object sender, EventArgs e)
         {
+            DisplayAll();
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            isMoving = true;
+            StartMove = e.Location;
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            isMoving = false;
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMoving)
+            {
+                if ((DateTime.Now - temp).TotalMilliseconds>75)
+                {
+                    DisplayAll();
+                    Pictgraph.DrawLine(ToolPen,e.Location,StartMove );
+                }
+            }
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            isMoving = false;
+            Move(StartMove.X - e.X, StartMove.Y - e.Y);
             DisplayAll();
         }
     }
