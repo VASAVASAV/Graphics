@@ -12,6 +12,7 @@ namespace Lab1
     class MyProg : Form
     {
         List<TabPage> TempList = new List<TabPage>();
+        double A, B, C;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private Button button1;
@@ -21,10 +22,11 @@ namespace Lab1
         Pen CenterPen = new Pen(Color.Black,4);
         Pen OldPen = new Pen(Color.Blue,2);
         Pen ToolPen = new Pen(Color.Green, 3);
+        Pen LinePen = new Pen(Color.Green, 3);
         bool isMoving = false;
         Point StartMove;
         DateTime temp = DateTime.Now;
-
+        bool LinePainted = false;
         List<ObjTWW> figs = new List<ObjTWW>();
         private Button button2;
         private RadioButton radioButton2;
@@ -68,6 +70,15 @@ namespace Lab1
         private TextBox textBox10;
         private RadioButton radioButton3;
         private TabPage tabPage3;
+        private TextBox textBox3;
+        private Label label5;
+        private Button button4;
+        private RadioButton radioButton7;
+        private RadioButton radioButton6;
+        private TextBox textBox4;
+        private TextBox textBox12;
+        private Label label7;
+        private Label label8;
         Graphics Pictgraph;
         private void InitializeComponent()
         {
@@ -92,6 +103,8 @@ namespace Lab1
             this.label11 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -117,6 +130,13 @@ namespace Lab1
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -124,6 +144,7 @@ namespace Lab1
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -335,6 +356,8 @@ namespace Lab1
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.textBox3);
+            this.tabPage4.Controls.Add(this.label5);
             this.tabPage4.Controls.Add(this.button8);
             this.tabPage4.Controls.Add(this.button7);
             this.tabPage4.Controls.Add(this.button6);
@@ -351,6 +374,23 @@ namespace Lab1
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Відзеркалення";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(142, 63);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(50, 20);
+            this.textBox3.TabIndex = 12;
+            this.textBox3.Text = "1";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(139, 40);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(32, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Крок";
             // 
             // button8
             // 
@@ -378,6 +418,7 @@ namespace Lab1
             this.button6.TabIndex = 8;
             this.button6.Text = "Відзеркалити відносно заданої прямої заданої рівнянням";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // textBox11
             // 
@@ -487,6 +528,13 @@ namespace Lab1
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button4);
+            this.tabPage3.Controls.Add(this.radioButton7);
+            this.tabPage3.Controls.Add(this.radioButton6);
+            this.tabPage3.Controls.Add(this.textBox4);
+            this.tabPage3.Controls.Add(this.textBox12);
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.label8);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(245, 314);
@@ -590,6 +638,69 @@ namespace Lab1
             this.textBox10.Size = new System.Drawing.Size(266, 49);
             this.textBox10.TabIndex = 2;
             // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(41, 39);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 20);
+            this.textBox4.TabIndex = 9;
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(41, 13);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(100, 20);
+            this.textBox12.TabIndex = 8;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 42);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(27, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "по у";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 16);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(27, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "по х";
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Checked = true;
+            this.radioButton6.Location = new System.Drawing.Point(11, 65);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(163, 17);
+            this.radioButton6.TabIndex = 9;
+            this.radioButton6.Text = "Відносно центру координат";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.Location = new System.Drawing.Point(11, 88);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(142, 17);
+            this.radioButton7.TabIndex = 10;
+            this.radioButton7.Text = "Відносно центру фігури";
+            this.radioButton7.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(11, 249);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(217, 53);
+            this.button4.TabIndex = 11;
+            this.button4.Text = "Розтягнути";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // MyProg
             // 
             this.ClientSize = new System.Drawing.Size(1041, 644);
@@ -609,6 +720,8 @@ namespace Lab1
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -618,6 +731,49 @@ namespace Lab1
         public void DisplayAll()
         {
             Pictgraph.Clear(pictureBox1.BackColor);
+            if (LinePainted)
+            {
+                double t1, t2, t3, t4;
+                double step;
+                try
+                {
+                    step = Convert.ToDouble(textBox3.Text);
+                }
+                catch
+                {
+                    step = 1;
+                }
+                double p1, p2;
+                p1 = 0;
+                p2 = -1 * (C / B);
+                t1 = p1;
+                t2 = p2;
+                t3 = 0;
+                t4 = 0;
+                if (B == 0)
+                    B = 0.0000001;
+                while (Math.Max(Math.Abs(t1), Math.Abs(t2)) < 5000)
+                {
+                    t3 = t1;
+                    t4 = t2;
+                    t1 += step;
+                    t2 = -1 * ((A * t1 + C) / B);
+                    Pictgraph.DrawLine(OldPen, (int)t1, (int)t2, (int)t3, (int)t4);
+                }
+                t1 = p1;
+                t2 = p2;
+                t3 = 0;
+                t4 = 0;
+                while (Math.Max(Math.Abs(t1), Math.Abs(t2)) < 5000)
+                {
+                    t3 = t1;
+                    t4 = t2;
+                    t1 -= step;
+                    t2 = -1 * ((A * t1 + C) / B);
+                    Pictgraph.DrawLine(OldPen, (int)t1, (int)t2, (int)t3, (int)t4);
+                }
+            }
+            /////
             int i, j;
             for (i = 0; i < figs.Count; i++)
             {
@@ -938,6 +1094,71 @@ namespace Lab1
             }
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                A = Convert.ToDouble(textBox7.Text);
+                B = Convert.ToDouble(textBox9.Text);
+                C = Convert.ToDouble(textBox11.Text);
+            }
+            catch
+            {
+                textBox10.Text = "Один з параметрів прямої заданий невірно";
+                return;
+            }
+            double anlge = Math.Atan(-1*(A/B));
+            LinePainted = true;            
+            for (int i = 0; i < figs.Count; i++)
+            {
+                figs[i].Move(0, -C);
+                figs[i].Rotate(0, 0, anlge);
+                figs[i].Mirror();
+                figs[i].Rotate(0, 0, -anlge);
+                figs[i].Move(0, C);
+            }
+            DisplayAll();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            double xp, yp;
+            try
+            {
+                xp = Convert.ToDouble(textBox12.Text);
+                yp = Convert.ToDouble(textBox4.Text);
+            }
+            catch 
+            {
+                textBox10.Text = "Один з параметрів прямої заданий невірно";
+                return;
+            }
+            if (radioButton6.Checked)
+            {
+                for (int i = 0; i < figs.Count; i++)
+                {
+                    figs[i].Dilation(0, 0, xp, yp);
+                }
+            }
+            else
+            {
+                double centerx=0, centery=0;
+                for (int i = 0; i < (int)(figs[0].RealPs.Length/2); i++)
+                {
+                    centerx +=figs[0].RealPs[i,0];
+                    centery += figs[0].RealPs[i, 1];
+                }
+                centerx /= (figs[0].RealPs.Length/2);
+                centery /= (figs[0].RealPs.Length/2);
+                for (int i = 0; i < figs.Count; i++)
+                {
+                    figs[i].Dilation(centerx, centery, xp, yp);
+                }
+            }
+            DisplayAll();
+        }
+
+
 
 
     }
@@ -992,6 +1213,7 @@ namespace Lab1
                 RealPs[i, 1] = targ[i].Y;
             }
         }
+       
         public void Move(double xm, double ym)
         {
             Complex[,] MoveMat = new Complex [3,3];
@@ -1016,19 +1238,60 @@ namespace Lab1
         public void Rotate(double px, double py, double angle)
         {
             this.Move(-px,-py);
-            Complex[,] MoveMat = new Complex[3, 3];
+            Complex[,] RotMat = new Complex[3, 3];
             Complex[,] TargMat = new Complex[3, 1];
-            MoveMat[0, 0] = Math.Cos(angle);
-            MoveMat[0, 1] = Math.Sin(angle);
-            MoveMat[1, 0] = -1*Math.Sin(angle);
-            MoveMat[1, 1] = Math.Cos(angle);
-            MoveMat[2, 2] = 1;
+            RotMat[0, 0] = Math.Cos(angle);
+            RotMat[0, 1] = Math.Sin(angle);
+            RotMat[1, 0] = -1*Math.Sin(angle);
+            RotMat[1, 1] = Math.Cos(angle);
+            RotMat[2, 2] = 1;
             for (int i = 0; i < ps.Length; i++)
             {
                 TargMat[0, 0] = RealPs[i, 0];
                 TargMat[1, 0] = RealPs[i, 1];
                 TargMat[2, 0] = 1;
-                TargMat = Matrixes.Multiply(MoveMat, TargMat);
+                TargMat = Matrixes.Multiply(RotMat, TargMat);
+                RealPs[i, 0] = (TargMat[0, 0] / TargMat[2, 0]).Real;
+                RealPs[i, 1] = (TargMat[1, 0] / TargMat[2, 0]).Real;
+                ps[i].X = (int)RealPs[i, 0];
+                ps[i].Y = (int)RealPs[i, 1];
+            }
+            this.Move(px, py);
+        }
+
+        public void Mirror()
+        {
+            Complex[,] MirrorMat = new Complex[3, 3];
+            Complex[,] TargMat = new Complex[3, 1];
+            MirrorMat[0, 0] = 1;
+            MirrorMat[1, 1] = -1d;
+            MirrorMat[2, 2] = 1;
+            for (int i = 0; i < ps.Length; i++)
+            {
+                TargMat[0, 0] = RealPs[i, 0];
+                TargMat[1, 0] = RealPs[i, 1];
+                TargMat[2, 0] = 1;
+                TargMat = Matrixes.Multiply(MirrorMat, TargMat);
+                RealPs[i, 0] = (TargMat[0, 0] / TargMat[2, 0]).Real;
+                RealPs[i, 1] = (TargMat[1, 0] / TargMat[2, 0]).Real;
+                ps[i].X = (int)RealPs[i, 0];
+                ps[i].Y = (int)RealPs[i, 1];
+            }
+        }
+        public void Dilation(double px, double py, double p2x, double p2y)
+        {
+            this.Move(-px, -py);
+            Complex[,] DilMat = new Complex[3, 3];
+            Complex[,] TargMat = new Complex[3, 1];
+            DilMat[0, 0] = p2x;
+            DilMat[1, 1] = p2y;
+            DilMat[2, 2] = 1;
+            for (int i = 0; i < ps.Length; i++)
+            {
+                TargMat[0, 0] = RealPs[i, 0];
+                TargMat[1, 0] = RealPs[i, 1];
+                TargMat[2, 0] = 1;
+                TargMat = Matrixes.Multiply(DilMat, TargMat);
                 RealPs[i, 0] = (TargMat[0, 0] / TargMat[2, 0]).Real;
                 RealPs[i, 1] = (TargMat[1, 0] / TargMat[2, 0]).Real;
                 ps[i].X = (int)RealPs[i, 0];
