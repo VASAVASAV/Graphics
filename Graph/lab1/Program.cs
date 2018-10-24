@@ -13,6 +13,7 @@ namespace Lab1
     {
         List<TabPage> TempList = new List<TabPage>();
         double A, B, C;
+		string LastOp = "";
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private Button button1;
@@ -23,7 +24,7 @@ namespace Lab1
         Pen OldPen = new Pen(Color.Blue,2);
         Pen ToolPen = new Pen(Color.Green, 3);
         Pen LinePen = new Pen(Color.Green, 3);
-        bool isMoving = false;
+        bool IsWorking = false;
         Point StartMove;
         DateTime temp = DateTime.Now;
         bool LinePainted = false;
@@ -750,28 +751,45 @@ namespace Lab1
                 t2 = p2;
                 t3 = 0;
                 t4 = 0;
-                if (B == 0)
-                    B = 0.0000001;
-                while (Math.Max(Math.Abs(t1), Math.Abs(t2)) < 5000)
-                {
-                    t3 = t1;
-                    t4 = t2;
-                    t1 += step;
-                    t2 = -1 * ((A * t1 + C) / B);
-                    Pictgraph.DrawLine(OldPen, (int)t1, (int)t2, (int)t3, (int)t4);
-                }
-                t1 = p1;
-                t2 = p2;
-                t3 = 0;
-                t4 = 0;
-                while (Math.Max(Math.Abs(t1), Math.Abs(t2)) < 5000)
-                {
-                    t3 = t1;
-                    t4 = t2;
-                    t1 -= step;
-                    t2 = -1 * ((A * t1 + C) / B);
-                    Pictgraph.DrawLine(OldPen, (int)t1, (int)t2, (int)t3, (int)t4);
-                }
+				if (B == 0)
+				{
+					t1 = C / A;
+					t2 = 0;
+					Pictgraph.DrawLine(OldPen, (int)t1, (int)t2-2500, (int)t1, (int)t2+2500);
+				}
+				else
+				{
+					if (A == 0)
+					{
+						t1 = 0;
+						t2 = C/B;
+						Pictgraph.DrawLine(OldPen, (int)t1-2500, (int)t2, (int)t1+2500, (int)t2);
+					}
+					else
+					{
+
+						while (Math.Max(Math.Abs(t1), Math.Abs(t2)) < 5000)
+						{
+							t3 = t1;
+							t4 = t2;
+							t1 += step;
+							t2 = -1 * ((A * t1 + C) / B);
+							Pictgraph.DrawLine(OldPen, (int)t1, (int)t2, (int)t3, (int)t4);
+						}
+						t1 = p1;
+						t2 = p2;
+						t3 = 0;
+						t4 = 0;
+						while (Math.Max(Math.Abs(t1), Math.Abs(t2)) < 5000)
+						{
+							t3 = t1;
+							t4 = t2;
+							t1 -= step;
+							t2 = -1 * ((A * t1 + C) / B);
+							Pictgraph.DrawLine(OldPen, (int)t1, (int)t2, (int)t3, (int)t4);
+						}
+					}
+				}
             }
             /////
             int i, j;
@@ -807,17 +825,28 @@ namespace Lab1
                 tabControl1.Controls.RemoveAt(0);
             }
             dataGridView1.AllowUserToAddRows = true;
-        }
+			this.pictureBox1.MouseDown -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+			this.pictureBox1.MouseLeave -= new System.EventHandler(this.pictureBox1_MouseLeave);
+			this.pictureBox1.MouseMove -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+			this.pictureBox1.MouseUp -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+		}
         private void Move(int xarg, int yarg)
         {
-            center.X -= xarg;
-            center.Y -= yarg;
             int i;
             for (i = 0; i < figs.Count; i++)
             {
-                figs[i].Move(xarg,yarg);
+                figs[i].Move(-xarg,-yarg);
             }
         }
+
+		private void Rotate(int yarg)
+		{
+			int i;
+			for (i = 0; i < figs.Count; i++)
+			{
+				figs[i].Rotate(0,0,yarg*(360/Math.PI)); 
+			}
+		}
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -834,57 +863,136 @@ namespace Lab1
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            isMoving = true;
+            IsWorking = true;
             StartMove = e.Location;
         }
 
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
-            isMoving = false;
+            IsWorking = false;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isMoving)
+            if (IsWorking)
             {
                 if ((DateTime.Now - temp).TotalMilliseconds>75)
                 {
                     DisplayAll();
-                    Pictgraph.DrawLine(ToolPen,e.Location,StartMove );
-                }
+					Move(StartMove.X - e.X, StartMove.Y - e.Y);
+					StartMove = e.Location;
+				}
             }
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            isMoving = false;
+            IsWorking = false;
             Move(StartMove.X - e.X, StartMove.Y - e.Y);
             DisplayAll();
         }
+
+		private void DelLast()
+		{
+			switch (LastOp)
+			{
+				case "Move":
+					{
+						this.pictureBox1.MouseDown -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+						this.pictureBox1.MouseLeave -= new System.EventHandler(this.pictureBox1_MouseLeave);
+						this.pictureBox1.MouseMove -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+						this.pictureBox1.MouseUp -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+						break;
+					}
+				case "Fig":
+					{
+						this.pictureBox1.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClickFig);
+						break;
+
+					}
+				case "Rotate":
+					{
+						this.pictureBox1.MouseDown -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown2);
+						this.pictureBox1.MouseLeave -= new System.EventHandler(this.pictureBox1_MouseLeave2);
+						this.pictureBox1.MouseMove -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove2);
+						this.pictureBox1.MouseUp -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp2);
+						break;
+
+					}
+			}
+		}
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton1.Checked)
             {
-                tabControl1.Controls.Clear();
+				DelLast();
+				tabControl1.Controls.Clear();
                 tabControl1.Controls.Add(TempList[0]);
-            }
+				this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+				this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+				this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+				this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+				LastOp = "Move";
+			}
+			
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton2.Checked)
             {
-                tabControl1.Controls.Clear();
+				DelLast();
+				tabControl1.Controls.Clear();
                 tabControl1.Controls.Add(TempList[1]);
-            }
+				this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown2);
+				this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave2);
+				this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove2);
+				this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp2);
+
+				LastOp = "Rotate";
+			}
         }
 
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+		//--------------------
+		private void pictureBox1_MouseDown2(object sender, MouseEventArgs e)
+		{
+			IsWorking = true;
+			StartMove = e.Location;
+		}
+
+		private void pictureBox1_MouseLeave2(object sender, EventArgs e)
+		{
+			IsWorking = false;
+		}
+
+		private void pictureBox1_MouseMove2(object sender, MouseEventArgs e)
+		{
+			if (IsWorking)
+			{
+				if ((DateTime.Now - temp).TotalMilliseconds > 75)
+				{
+					Rotate(StartMove.Y - e.Y);
+					StartMove = e.Location;
+					DisplayAll();
+				}
+			}
+		}
+
+		private void pictureBox1_MouseUp2(object sender, MouseEventArgs e)
+		{
+			IsWorking = false;
+			Rotate(StartMove.Y - e.Y);
+			DisplayAll();
+		}
+		//---------------------
+
+		private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton4.Checked)
             {
-                tabControl1.Controls.Clear();
+				DelLast();
+				tabControl1.Controls.Clear();
                 tabControl1.Controls.Add(TempList[2]);
             }
         }
@@ -893,16 +1001,27 @@ namespace Lab1
         {
             if (radioButton5.Checked)
             {
-                tabControl1.Controls.Clear();
+				DelLast();
+				tabControl1.Controls.Clear();
                 tabControl1.Controls.Add(TempList[3]);
-            }
+				this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClickFig);
+				LastOp = "Fig";
+			}
         }
 
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+		private void pictureBox1_MouseClickFig(object sender, MouseEventArgs e)
+		{
+			dataGridView1.Rows.Add(new DataGridViewRow());
+			dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[0].Value = e.X;
+			dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[1].Value = e.Y;
+		}
+
+			private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton3.Checked)
             {
-                tabControl1.Controls.Clear();
+				DelLast();
+				tabControl1.Controls.Clear();
                 tabControl1.Controls.Add(TempList[4]);
             }
         }
@@ -1111,11 +1230,11 @@ namespace Lab1
             LinePainted = true;            
             for (int i = 0; i < figs.Count; i++)
             {
-                figs[i].Move(0, -C);
+                figs[i].Move((B == 0) ? (-C/A) : (0), ((A==0)?(-1):(1))*((B==0)?(0):(C/B)));
                 figs[i].Rotate(0, 0, anlge);
                 figs[i].Mirror();
                 figs[i].Rotate(0, 0, -anlge);
-                figs[i].Move(0, C);
+                figs[i].Move((B == 0) ? (C / A) : (0), ((A == 0) ? (-1) : (1)) * ((B == 0) ? (0) : (-C / B)));
             }
             DisplayAll();
         }
