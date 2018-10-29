@@ -11,6 +11,7 @@ namespace Lab1
     
     class MyProg : Form
     {
+        Point FirstPoint = new Point(-1000, -1000), SecondPoint = new Point(-1000, -1000);
         List<TabPage> TempList = new List<TabPage>();
         double A, B, C;
 		string LastOp = "";
@@ -122,6 +123,13 @@ namespace Lab1
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -131,13 +139,6 @@ namespace Lab1
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -401,6 +402,7 @@ namespace Lab1
             this.button8.TabIndex = 10;
             this.button8.Text = "Стерти пряму задану 2 точками";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button7
             // 
@@ -410,6 +412,7 @@ namespace Lab1
             this.button7.TabIndex = 9;
             this.button7.Text = "Відзеркалити відносно прямої заданої двома точками";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button6
             // 
@@ -543,6 +546,70 @@ namespace Lab1
             this.tabPage3.Text = "Розтяг";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(11, 249);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(217, 53);
+            this.button4.TabIndex = 11;
+            this.button4.Text = "Розтягнути";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.Location = new System.Drawing.Point(11, 88);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(142, 17);
+            this.radioButton7.TabIndex = 10;
+            this.radioButton7.Text = "Відносно центру фігури";
+            this.radioButton7.UseVisualStyleBackColor = true;
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Checked = true;
+            this.radioButton6.Location = new System.Drawing.Point(11, 65);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(163, 17);
+            this.radioButton6.TabIndex = 9;
+            this.radioButton6.TabStop = true;
+            this.radioButton6.Text = "Відносно центру координат";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(41, 39);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 20);
+            this.textBox4.TabIndex = 9;
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(41, 13);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(100, 20);
+            this.textBox12.TabIndex = 8;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 42);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(27, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "по у";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 16);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(27, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "по х";
+            // 
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
@@ -638,69 +705,6 @@ namespace Lab1
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(266, 49);
             this.textBox10.TabIndex = 2;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(41, 39);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 9;
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(41, 13);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(100, 20);
-            this.textBox12.TabIndex = 8;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 42);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(27, 13);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "по у";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 16);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(27, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "по х";
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Checked = true;
-            this.radioButton6.Location = new System.Drawing.Point(11, 65);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(163, 17);
-            this.radioButton6.TabIndex = 9;
-            this.radioButton6.Text = "Відносно центру координат";
-            this.radioButton6.UseVisualStyleBackColor = true;
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(11, 88);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(142, 17);
-            this.radioButton7.TabIndex = 10;
-            this.radioButton7.Text = "Відносно центру фігури";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(11, 249);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(217, 53);
-            this.button4.TabIndex = 11;
-            this.button4.Text = "Розтягнути";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // MyProg
             // 
@@ -839,13 +843,59 @@ namespace Lab1
             }
         }
 
+        private void Dilay(int xarg, int yarg)
+        {
+            if (radioButton6.Checked)
+            {
+                for (int i = 0; i < figs.Count; i++)
+                {
+                    figs[i].Dilation(0, 0, 1 + xarg * 0.01, 1 + yarg * 0.01);
+                }
+            }
+            else
+            {
+                double centerx = 0, centery = 0;
+                for (int i = 0; i < (int)(figs[0].RealPs.Length / 2); i++)
+                {
+                    centerx += figs[0].RealPs[i, 0];
+                    centery += figs[0].RealPs[i, 1];
+                }
+                centerx /= (figs[0].RealPs.Length / 2);
+                centery /= (figs[0].RealPs.Length / 2);
+                for (int i = 0; i < figs.Count; i++)
+                {
+                    figs[i].Dilation(centerx, centery, 1 + xarg * 0.01, 1 + yarg * 0.01);
+                }
+            }
+            DisplayAll();
+        }
+
 		private void Rotate(int yarg)
 		{
 			int i;
+            double px, py;
+            try
+            {
+                px = Convert.ToDouble(textBox6.Text);
+                py = Convert.ToDouble(textBox5.Text);
+            }
+            catch
+            {
+                textBox10.Text = "Поворот буде здійснено відносно точки 0,0";
+                px = 0;
+                py = 0;
+            }
+
 			for (i = 0; i < figs.Count; i++)
 			{
-				figs[i].Rotate(0,0,yarg*(360/Math.PI)); 
+				figs[i].Rotate(px,py,yarg*(Math.PI/180)); 
 			}
+            DisplayAll();
+            PentoUse.Color = Color.Green;
+            Pictgraph.DrawLine(PentoUse, (int)px - 5, (int)py + 5, (int)px + 5, (int)py - 5);
+            Pictgraph.DrawLine(PentoUse, (int)px - 5, (int)py - 5, (int)px + 5, (int)py + 5);
+
+            PentoUse.Color = Color.Red;
 		}
 
         private void button1_Click(object sender, EventArgs e)
@@ -876,7 +926,7 @@ namespace Lab1
         {
             if (IsWorking)
             {
-                if ((DateTime.Now - temp).TotalMilliseconds>75)
+                if ((DateTime.Now - temp).TotalMilliseconds>100)
                 {
                     DisplayAll();
 					Move(StartMove.X - e.X, StartMove.Y - e.Y);
@@ -919,6 +969,21 @@ namespace Lab1
 						break;
 
 					}
+                case "Mirror":
+                    {
+                        this.pictureBox1.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClickMirror);
+                        break;
+
+                    }
+                case "Dil":
+                    {
+                        this.pictureBox1.MouseDown -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown3);
+                        this.pictureBox1.MouseLeave -= new System.EventHandler(this.pictureBox1_MouseLeave3);
+                        this.pictureBox1.MouseMove -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove3);
+                        this.pictureBox1.MouseUp -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp3);
+                        break;
+
+                    }
 			}
 		}
 
@@ -970,11 +1035,10 @@ namespace Lab1
 		{
 			if (IsWorking)
 			{
-				if ((DateTime.Now - temp).TotalMilliseconds > 75)
+				if ((DateTime.Now - temp).TotalMilliseconds > 80)
 				{
 					Rotate(StartMove.Y - e.Y);
 					StartMove = e.Location;
-					DisplayAll();
 				}
 			}
 		}
@@ -986,7 +1050,37 @@ namespace Lab1
 			DisplayAll();
 		}
 		//---------------------
+        //--------------------
+        private void pictureBox1_MouseDown3(object sender, MouseEventArgs e)
+        {
+            IsWorking = true;
+            StartMove = e.Location;
+        }
 
+        private void pictureBox1_MouseLeave3(object sender, EventArgs e)
+        {
+            IsWorking = false;
+        }
+
+        private void pictureBox1_MouseMove3(object sender, MouseEventArgs e)
+        {
+            if (IsWorking)
+            {
+                if ((DateTime.Now - temp).TotalMilliseconds > 150)
+                {
+                    Dilay(StartMove.X - e.X, StartMove.Y - e.Y);
+                    StartMove = e.Location;
+                }
+            }
+        }
+
+        private void pictureBox1_MouseUp3(object sender, MouseEventArgs e)
+        {
+            IsWorking = false;
+            Dilay(StartMove.X - e.X, StartMove.Y - e.Y);
+            DisplayAll();
+        }
+        //---------------------
 		private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton4.Checked)
@@ -994,6 +1088,8 @@ namespace Lab1
 				DelLast();
 				tabControl1.Controls.Clear();
                 tabControl1.Controls.Add(TempList[2]);
+                this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClickMirror);
+                LastOp = "Mirror";
             }
         }
 
@@ -1007,6 +1103,61 @@ namespace Lab1
 				this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClickFig);
 				LastOp = "Fig";
 			}
+        }
+
+        private void pictureBox1_MouseClickMirror(object sender, MouseEventArgs e)
+        {
+            if (FirstPoint.X == -1000)
+            {
+                FirstPoint.X = e.X;
+                FirstPoint.Y = e.Y;
+            }
+            else
+            {
+                if (SecondPoint.X == -1000)
+                {
+                    SecondPoint.X = e.X;
+                    SecondPoint.Y = e.Y;
+                }
+                else
+                { 
+                    FirstPoint.X = SecondPoint.X;
+                    FirstPoint.Y = SecondPoint.Y;
+                    SecondPoint.X = e.X;
+                    SecondPoint.Y = e.Y;
+                }
+                LinePainted = true;
+                if (FirstPoint == SecondPoint)
+                {
+                    LinePainted = false;
+                }
+                else
+                {
+                    if (FirstPoint.Y == SecondPoint.Y)
+                    {
+                        A = 0;
+                        B = 1;
+                        C = -1 * FirstPoint.Y;
+                    }
+                    else
+                    {
+                        if (FirstPoint.X == SecondPoint.X)
+                        {
+                            A = 1;
+                            B = 0;
+                            C = -1 * FirstPoint.X;
+                        }
+                        else
+                        {
+                            A = SecondPoint.Y - FirstPoint.Y;
+                            B = FirstPoint.X - SecondPoint.X;
+                            C = -1 * FirstPoint.X * (SecondPoint.Y - FirstPoint.Y) - FirstPoint.Y * (FirstPoint.X - SecondPoint.X);
+                        }
+                    }
+                }
+                DisplayAll();
+            }
+
         }
 
 		private void pictureBox1_MouseClickFig(object sender, MouseEventArgs e)
@@ -1023,6 +1174,11 @@ namespace Lab1
 				DelLast();
 				tabControl1.Controls.Clear();
                 tabControl1.Controls.Add(TempList[4]);
+                this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown3);
+                this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave3);
+                this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove3);
+                this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp3);
+                LastOp = "Dil";
             }
         }
 
@@ -1164,7 +1320,7 @@ namespace Lab1
             PentoUse.Color = Color.Red;
             for (int i = 0; i < figs.Count; i++)
             {
-                figs[i].Rotate(px, py,angle*(Math.PI/180));
+                figs[i].Rotate(px, py,angle*(Math.PI/360));
             }
             DisplayAll();
             PentoUse.Color = Color.Green;
@@ -1273,6 +1429,29 @@ namespace Lab1
                 {
                     figs[i].Dilation(centerx, centery, xp, yp);
                 }
+            }
+            DisplayAll();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            FirstPoint = new Point(-1000, -1000);
+            SecondPoint = new Point(-1000, -1000);
+            LinePainted = false;
+            DisplayAll();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double anlge = Math.Atan(-1 * (A / B));
+            LinePainted = true;
+            for (int i = 0; i < figs.Count; i++)
+            {
+                figs[i].Move((B == 0) ? (-C / A) : (0), ((A == 0) ? (-1) : (1)) * ((B == 0) ? (0) : (C / B)));
+                figs[i].Rotate(0, 0, anlge);
+                figs[i].Mirror();
+                figs[i].Rotate(0, 0, -anlge);
+                figs[i].Move((B == 0) ? (C / A) : (0), ((A == 0) ? (-1) : (1)) * ((B == 0) ? (0) : (-C / B)));
             }
             DisplayAll();
         }
