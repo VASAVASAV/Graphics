@@ -9,6 +9,8 @@ namespace Lab2
 {
     class StartPoint
     {
+        Model MainModel = new Model();
+
         [STAThread]
         static void Main(string[] args)
         {

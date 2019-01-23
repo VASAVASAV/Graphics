@@ -7,5 +7,7 @@ namespace Lab2
 {
     class Model
     {
+         Controler Cont2d;
+         Controler Cont3d;
     }
 }

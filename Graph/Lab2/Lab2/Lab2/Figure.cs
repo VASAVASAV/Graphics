@@ -7,36 +7,45 @@ namespace Lab2
 {
     class Figure
     {
-        List<Tuple<double[], List<double>>> cells = new List<Tuple<double[], List<double>>>(); // array - 3 double values, coordinates x,y,z. List - numbers of cells, to which one is connected
-        bool isChangeable; // Desribes ability to be changed by affine transformation. 
+        List<MPoint> cells = new List<MPoint>();
 
-        bool IsChangeable
+        bool IsChangeable { get; }
+
+        Figure(List<MPoint> newCells)
         {
-            get 
+            IsChangeable = true;
+            for (int i = 0; i < newCells.Count; i++)
             {
-                return isChangeable;
+                cells.Add(newCells[i]);
             }
-
         }
 
-        //List<Tuple<double[], List<double>>> Cells
-        //{
-        //    get
-        //    {
-        //        return cells;
-        //    }
-
-        //}
-
-        Figure(List<Tuple<double[], List<double>>> newCells, bool InputChangeable)
+        Figure(List<MPoint> newCells, bool ChangeableInput)
         {
-            isChangeable = InputChangeable;
-            cells = newCells;
+            IsChangeable = ChangeableInput;
+            for (int i = 0; i < newCells.Count; i++)
+            {
+                cells.Add(newCells[i]);
+            }
         }
-        
-        void AddCell
 
+        Figure(MPoint newCell)
+        {
+            IsChangeable = true;
+            cells.Add(newCell);
+        }
 
+        void AddCell(MPoint newCell)
+        {
+            cells.Add(newCell);
+        }
 
+        void RemovePoint(MPoint CellToDelete)
+        {
+            while (cells.Contains(CellToDelete))
+            {
+                cells.Remove(CellToDelete);
+            }
+        }
     }
 }
