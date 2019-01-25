@@ -1,0 +1,9 @@
+D:\work\Graph\Lab1\Lab1\obj\Debug\Lab1.csprojAssemblyReference.cache
+D:\work\Graph\Lab1\Lab1\obj\Debug\Lab1.MyProg.resources
+D:\work\Graph\Lab1\Lab1\obj\Debug\Lab1.csproj.GenerateResource.cache
+D:\work\Graph\Lab1\Lab1\obj\Debug\Lab1.csproj.CoreCompileInputs.cache
+D:\work\Graph\Lab1\Lab1\bin\Debug\Lab1.exe.config
+D:\work\Graph\Lab1\Lab1\bin\Debug\Lab1.exe
+D:\work\Graph\Lab1\Lab1\bin\Debug\Lab1.pdb
+D:\work\Graph\Lab1\Lab1\obj\Debug\Lab1.exe
+D:\work\Graph\Lab1\Lab1\obj\Debug\Lab1.pdb
