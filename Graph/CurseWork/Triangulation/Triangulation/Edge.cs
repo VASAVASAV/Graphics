@@ -7,8 +7,8 @@ namespace Triangulation
 {
     class Edge
     {
-        public Edge LeftT;
-        public Edge RightT;
+        public Edge EdgeBefore;
+        public Edge EdgeAfter;
         public MPoint StartP;
         public MPoint EndP;
 
@@ -19,28 +19,28 @@ namespace Triangulation
         }
         public Edge GetOtherNeigh(Edge Other)
         {
-            if(LeftT==Other)
+            if(EdgeBefore==Other)
             {
-                return RightT;
+                return EdgeAfter;
             }
             else
             {
-                return LeftT;
+                return EdgeBefore;
             }
         }
-        public static bool operator ==(Edge e1, Edge e2)
+       /* public static bool operator ==(Edge e1, Edge e2)
         {
             if (((e1.StartP == e2.StartP) && (e1.EndP == e2.EndP)) || ((e1.StartP == e2.EndP) && (e1.EndP == e2.StartP)))
                 return true;
             return false;
-        }
+        }*/
 
-        public static bool operator !=(Edge e1, Edge e2)
+       /* public static bool operator !=(Edge e1, Edge e2)
         {
             if (((e1.StartP == e2.StartP) && (e1.EndP == e2.EndP)) || ((e1.StartP == e2.EndP) && (e1.EndP == e2.StartP)))
                 return false;
             return true;
-        }
+        }*/
 
         public bool Contains(MPoint p)
         {

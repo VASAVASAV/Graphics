@@ -69,7 +69,7 @@ namespace Triangulation
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1131, 766);
+            this.panel1.Size = new System.Drawing.Size(1131, 908);
             this.panel1.TabIndex = 0;
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
@@ -225,7 +225,7 @@ namespace Triangulation
             // 
             // MyProg
             // 
-            this.ClientSize = new System.Drawing.Size(1528, 790);
+            this.ClientSize = new System.Drawing.Size(1583, 932);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
@@ -276,24 +276,33 @@ namespace Triangulation
                 panel1.Invalidate();
                 return;
             }
+            int temp;
+            lol:
+            for (i = 0; i < Points.Count - 1; i++)
+            {
+                for (j = i + 1; j < Points.Count; j++)
+                {
+                    if (Points[i] == Points[j])
+                    {
+                        temp = Points[j].Number;
+                        Points.RemoveAt(j);
+                        for (k = 0; k < Points.Count; k++)
+                        {
+                            if (Points[k].Number > temp)
+                            {
+                                Points[k].Number--;
+                            }
+                        }
+                        goto lol;
+                    }
+                }
+            }
             MPoint First = Points[0];
             for (i = 1; i < Points.Count; i++)
             {
                 if (Points[i].X < First.X)
                 {
                     First = Points[i];
-                }
-            }
-            lol:
-            for (i = 0; i < Points.Count-1; i++)
-            {
-                for (j = i+1; j < Points.Count; j++)
-                {
-                    if (Points[i] == Points[j]) 
-                    {
-                        Points.RemoveAt(j);
-                        goto lol;
-                    }
                 }
             }
             double CurAngle = double.MaxValue;
@@ -342,9 +351,13 @@ namespace Triangulation
                 }
                 for (i = 0; i < FreePoints.Count; i++)
                 {
+                    if (Geometry.IsRightFromLine(ActiveEdges[0], FreePoints[i]))
+                    {
+                        continue;
+                    }
                     GoodPoint = true;//checking activeedges[0] and freepoints[i] for being able to create good triangle            
                     for(j=0; j <Points.Count;j++ )
-                    {
+                    {  
                         if (Points[j].IsInsideOfCircle(ActiveEdges[0].StartP, ActiveEdges[0].EndP, FreePoints[i]))
                         {
                             GoodPoint = false;
@@ -354,15 +367,23 @@ namespace Triangulation
                     if (GoodPoint)
                     {
                         Edges.Add(new Edge(ActiveEdges[0].StartP, FreePoints[i]));
-                        Edges.Add(new Edge(ActiveEdges[0].EndP, FreePoints[i]));
+                        Edges.Add(new Edge(FreePoints[i],ActiveEdges[0].EndP));
                         ActiveEdges.Add(Edges[Edges.Count - 2]);
                         ActiveEdges.Add(Edges[Edges.Count - 1]);
-                        ActiveEdges[ActiveEdges.Count - 2].LeftT = ActiveEdges[0].LeftT;
-                        ActiveEdges[ActiveEdges.Count - 2].RightT = ActiveEdges[ActiveEdges.Count - 1];
-                        ActiveEdges[ActiveEdges.Count - 1].LeftT = ActiveEdges[ActiveEdges.Count - 2];
-                        ActiveEdges[ActiveEdges.Count - 1].RightT = ActiveEdges[0].RightT;
+                        ActiveEdges[ActiveEdges.Count - 2].EdgeBefore = ActiveEdges[0].EdgeBefore;
+                        ActiveEdges[ActiveEdges.Count - 2].EdgeAfter = ActiveEdges[ActiveEdges.Count - 1];
+                        ActiveEdges[ActiveEdges.Count - 1].EdgeBefore = ActiveEdges[ActiveEdges.Count - 2];
+                        ActiveEdges[ActiveEdges.Count - 1].EdgeAfter = ActiveEdges[0].EdgeAfter;
+                        if (ActiveEdges[0].EdgeBefore != null)
+                        {
+                            ActiveEdges[0].EdgeBefore.EdgeAfter = ActiveEdges[ActiveEdges.Count - 2];
+                        }
+                        if (ActiveEdges[0].EdgeAfter != null)
+                        {
+                            ActiveEdges[0].EdgeAfter.EdgeBefore = ActiveEdges[ActiveEdges.Count - 1];
+                        }
                         //ActiveEdges.RemoveAt(0);
-                       /* CurEdge = ActiveEdges[0].LeftT;
+                       /* CurEdge = ActiveEdges[0].EdgeBefore;
                         while (CurEdge != null)
                         {
                             for (k = 0; k < Points.Count; k++)
@@ -447,6 +468,45 @@ namespace Triangulation
                 NiceWork :
                 for (i = 0; i < ActiveEdges.Count; i++)
                 {
+                    if (ActiveEdges[i].EdgeBefore!=null)
+                    {//first Neighbour
+                        MPoint Same = ActiveEdges[i].StartP, xi1 = ActiveEdges[i].EdgeBefore.StartP, xi2 = ActiveEdges[i].EndP;
+                        GoodPoint = true;
+                        if (Geometry.IsRightFromLine(xi1, Same, xi2))
+                        {
+                            GoodPoint = false;
+                        }
+                        for (k = 0; k < Points.Count && GoodPoint; k++)
+                        {
+                            if (Points[k].IsInsideOfCircle(Same, xi1, xi2))
+                            {
+                                GoodPoint = false;
+                            }
+                        }
+                        if (GoodPoint)
+                        {
+                            Edges.Add(new Edge(xi1, xi2));
+                            ActiveEdges.Add(Edges[Edges.Count - 1]);
+                            ActiveEdges[ActiveEdges.Count - 1].EdgeBefore = ActiveEdges[i].EdgeBefore.EdgeBefore;
+                            ActiveEdges[ActiveEdges.Count - 1].EdgeAfter = ActiveEdges[i].EdgeAfter;
+                            if (ActiveEdges[ActiveEdges.Count - 1].EdgeBefore != null)
+                            {
+                                ActiveEdges[ActiveEdges.Count - 1].EdgeBefore.EdgeAfter = ActiveEdges[ActiveEdges.Count - 1];
+                            }
+                            if (ActiveEdges[ActiveEdges.Count - 1].EdgeAfter != null)
+                            {
+                                ActiveEdges[ActiveEdges.Count - 1].EdgeAfter.EdgeBefore = ActiveEdges[ActiveEdges.Count - 1];
+                            }
+                            CurEdge = ActiveEdges[i];
+                            ActiveEdges.Remove(CurEdge.EdgeBefore);
+                            ActiveEdges.Remove(CurEdge);
+                            goto NiceWork;
+                        }
+                    }
+                }
+               /* NiceWork :
+                for (i = 0; i < ActiveEdges.Count; i++)
+                {
                     for (j = i + 1; j < ActiveEdges.Count; j++)
                     {
                         if ((ActiveEdges[i].StartP == ActiveEdges[j].EndP) || (ActiveEdges[i].EndP == ActiveEdges[j].StartP) || (ActiveEdges[i].StartP == ActiveEdges[j].StartP) || (ActiveEdges[i].EndP == ActiveEdges[j].EndP))
@@ -455,21 +515,10 @@ namespace Triangulation
                             if (ActiveEdges[i].StartP == ActiveEdges[j].EndP)
                             {
                                 Same = ActiveEdges[i].StartP;
-                                xi1 = ActiveEdges[i].EndP;
-                                xi2 = ActiveEdges[j].StartP;
+                                xi2 = ActiveEdges[i].EndP;
+                                xi1 = ActiveEdges[j].StartP;
                             }
-                            if (ActiveEdges[i].StartP == ActiveEdges[j].StartP)
-                            {
-                                Same = ActiveEdges[i].StartP;
-                                xi1 = ActiveEdges[i].EndP;
-                                xi2 = ActiveEdges[j].EndP;
-                            }
-                            if (ActiveEdges[i].EndP == ActiveEdges[j].EndP)
-                            {
-                                Same = ActiveEdges[i].EndP;
-                                xi1 = ActiveEdges[i].StartP;
-                                xi2 = ActiveEdges[j].StartP;
-                            }
+
                             if (ActiveEdges[i].EndP == ActiveEdges[j].StartP)
                             {
                                 Same = ActiveEdges[i].EndP;
@@ -477,23 +526,26 @@ namespace Triangulation
                                 xi2 = ActiveEdges[j].EndP;
                             }
                             GoodPoint = true;
-                            for(k=0; k <Points.Count;k++ )
+                            if (Geometry.IsRightFromLine(xi1,Same, xi2))
+                            {
+                                GoodPoint = false;
+                            }
+                            for(k=0; k <Points.Count && GoodPoint;k++ )
                             {
                                 if (Points[k].IsInsideOfCircle(Same, xi1, xi2))
                                 {
                                     GoodPoint = false;
-                                    break;
                                 }
                             }
-                            for(k=0; k <Edges.Count;k++ )
+                          /*  for (k = 0; k < Edges.Count && GoodPoint; k++)
                             {
                                 if((Edges[k].StartP == xi1 && Edges[k].EndP == xi2) || (Edges[k].EndP == xi1 && Edges[k].StartP == xi2))
                                 {
                                      GoodPoint = false;
                                     break;
                                 }
-                            }
-                            if (GoodPoint)
+                            }*/
+                           /* if (GoodPoint)
                             {
                                 Edges.Add(new Edge(xi1,xi2));
                                 ActiveEdges.Add(Edges[Edges.Count-1]);
@@ -504,7 +556,7 @@ namespace Triangulation
 
                         }
                     }
-                }
+                }*/
             }
             //textBox2.Text += "Time of work = " + (DateTime.Now - point).TotalMilliseconds + "ms" +Environment.NewLine;
             //textBox2.Text += (DateTime.Now - point).TotalMilliseconds + Environment.NewLine;
@@ -525,7 +577,7 @@ namespace Triangulation
             {
                 textBox2.Text += (DateTime.Now - point).TotalMilliseconds + Environment.NewLine;
             }
-          /*  int [] Counter = new int[Points.Count];
+            int [] Counter = new int[Points.Count];
             for (i = 0; i < Edges.Count; i++)
             {
                 Counter[Edges[i].EndP.Number - 1]++;
@@ -537,10 +589,10 @@ namespace Triangulation
                 {
                     textBox2.Text += "Aaaaaaaaaaaa";
                 }
-            }*/
+            }
              panel1.Invalidate();
         }
-    
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -642,7 +694,7 @@ namespace Triangulation
                         {
                             x = Convert.ToDouble(valuesInLine[0]);
                             y = Convert.ToDouble(valuesInLine[1]);
-                            Points.Add(new MPoint(x, y));
+                            Points.Add(new MPoint(x, y,Points.Count+1));
                         }
                         catch
                         {
@@ -696,12 +748,34 @@ namespace Triangulation
         private void button8_Click(object sender, EventArgs e)
         {
             int i, j;
-            for (i = 0; i < 20; i++)
+            int depth = 3;
+            call(depth, 10, 10, 810, 810);
+
+        }
+
+        void call(int depth, double  top, double left, double width, double height)
+        {
+            if (depth == 0)
             {
-                for (j = 0; j < 10; j++)
-                {
-                    textBox2.Text += (15 + i * 40 + j * 0.01) + " " + (15 + j * 40 + i * 0.01) + Environment.NewLine;
-                }
+                textBox2.Text += (top + height / 6) + " " + (left + width / 6) + Environment.NewLine;
+                textBox2.Text += (top + height / 6) + " " + (left + 5 * (width / 6)) + Environment.NewLine;
+                textBox2.Text += (top + height / 6) + " " + (left + width / 2) + Environment.NewLine;
+                textBox2.Text += (top + height / 2) + " " + (left + width / 6) + Environment.NewLine;
+                textBox2.Text += (top + height / 2) + " " + (left + 5*(width / 6)) + Environment.NewLine;
+                textBox2.Text += (top + 5 * (height / 6)) + " " + (left + width / 2) + Environment.NewLine;
+                textBox2.Text += (top + 5 * (height / 6)) + " " + (left + width / 6) + Environment.NewLine;
+                textBox2.Text += (top + 5 * (height / 6)) + " " + (left + 5*(width / 6)) + Environment.NewLine;
+            }
+            else
+            {
+                call(depth - 1, top, left,width/3, height/3);
+                call(depth - 1, top, left + width / 3, width / 3, height / 3);
+                call(depth - 1, top, left + 2*(width / 3), width / 3, height / 3);
+                call(depth - 1, top + height / 3, left, width / 3, height / 3);
+                call(depth - 1, top + height / 3, left + 2*( width / 3), width / 3, height / 3);
+                call(depth - 1, top + 2*(height / 3), left, width / 3, height / 3);
+                call(depth - 1, top + 2 * (height / 3), left + width / 3, width / 3, height / 3);
+                call(depth - 1, top + 2 * (height / 3), left + 2*(width / 3), width / 3, height / 3);
             }
         }
     }
