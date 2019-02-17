@@ -1,0 +1,4 @@
+F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2\Lab2\bin\Debug\Lab2.exe
+F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2\Lab2\bin\Debug\Lab2.pdb
+F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2\Lab2\obj\x86\Debug\Lab2.exe
+F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2\Lab2\obj\x86\Debug\Lab2.pdb

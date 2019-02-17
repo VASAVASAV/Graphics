@@ -1,0 +1,7 @@
+F:\work\Graph\Code\Graphics\Graph\CurseWork\Triangulation\Triangulation\bin\Debug\Triangulation.exe
+F:\work\Graph\Code\Graphics\Graph\CurseWork\Triangulation\Triangulation\bin\Debug\Triangulation.pdb
+F:\work\Graph\Code\Graphics\Graph\CurseWork\Triangulation\Triangulation\obj\x86\Debug\Triangulation.exe
+F:\work\Graph\Code\Graphics\Graph\CurseWork\Triangulation\Triangulation\obj\x86\Debug\Triangulation.pdb
+F:\work\Graph\Code\Graphics\Graph\CurseWork\Triangulation\Triangulation\obj\x86\Debug\Triangulation.MyProg.resources
+F:\work\Graph\Code\Graphics\Graph\CurseWork\Triangulation\Triangulation\obj\x86\Debug\Triangulation.csproj.GenerateResource.Cache
+F:\work\Graph\Code\Graphics\Graph\CurseWork\Triangulation\Triangulation\obj\x86\Debug\Triangulation.csprojResolveAssemblyReference.cache

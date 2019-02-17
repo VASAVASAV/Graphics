@@ -119,9 +119,6 @@ namespace Shore
         /// </summary>
         /// <param name="target1">Первая матрица, размер Size1хSize3</param>
         /// <param name="target2">Втоаря матрица, размер Size3хSize2</param>
-        /// <param name="Size1">Высота первой матрицы</param>
-        /// <param name="Size2">Ширина второй матрицы</param>
-        /// <param name="Size3">Ширина первой матрицы = высота второй</param>
         /// <returns></returns>
         public static Complex[,] Multiply(Complex[,] target1, Complex[,] target2)
         {
