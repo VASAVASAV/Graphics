@@ -1,0 +1,9 @@
+E:\work\Git\Graph\Lab2\Lab2\Lab1\bin\Debug\Lab1.exe.config
+E:\work\Git\Graph\Lab2\Lab2\Lab1\bin\Debug\Lab1.exe
+E:\work\Git\Graph\Lab2\Lab2\Lab1\bin\Debug\Lab1.pdb
+E:\work\Git\Graph\Lab2\Lab2\Lab1\obj\Debug\Lab2.csprojAssemblyReference.cache
+E:\work\Git\Graph\Lab2\Lab2\Lab1\obj\Debug\Lab2.mainForm.resources
+E:\work\Git\Graph\Lab2\Lab2\Lab1\obj\Debug\Lab2.csproj.GenerateResource.cache
+E:\work\Git\Graph\Lab2\Lab2\Lab1\obj\Debug\Lab2.csproj.CoreCompileInputs.cache
+E:\work\Git\Graph\Lab2\Lab2\Lab1\obj\Debug\Lab1.exe
+E:\work\Git\Graph\Lab2\Lab2\Lab1\obj\Debug\Lab1.pdb

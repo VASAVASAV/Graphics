@@ -69,13 +69,13 @@ namespace Triangulation
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(916, 622);
+            this.panel1.Size = new System.Drawing.Size(954, 655);
             this.panel1.TabIndex = 0;
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(934, 232);
+            this.button1.Location = new System.Drawing.Point(972, 232);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(365, 34);
             this.button1.TabIndex = 3;
@@ -85,7 +85,7 @@ namespace Triangulation
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(934, 12);
+            this.button2.Location = new System.Drawing.Point(972, 12);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(367, 34);
             this.button2.TabIndex = 4;
@@ -95,7 +95,7 @@ namespace Triangulation
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(934, 272);
+            this.textBox2.Location = new System.Drawing.Point(972, 272);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(367, 282);
@@ -104,7 +104,7 @@ namespace Triangulation
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1002, 150);
+            this.label1.Location = new System.Drawing.Point(1040, 150);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(218, 13);
             this.label1.TabIndex = 6;
@@ -112,14 +112,14 @@ namespace Triangulation
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(1067, 166);
+            this.textBox1.Location = new System.Drawing.Point(1105, 166);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 7;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(934, 192);
+            this.button3.Location = new System.Drawing.Point(972, 192);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(367, 34);
             this.button3.TabIndex = 8;
@@ -129,7 +129,7 @@ namespace Triangulation
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(934, 560);
+            this.button4.Location = new System.Drawing.Point(972, 560);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(367, 34);
             this.button4.TabIndex = 10;
@@ -139,9 +139,9 @@ namespace Triangulation
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(934, 600);
+            this.button5.Location = new System.Drawing.Point(972, 600);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(365, 34);
+            this.button5.Size = new System.Drawing.Size(367, 34);
             this.button5.TabIndex = 9;
             this.button5.Text = "Відкрити";
             this.button5.UseVisualStyleBackColor = true;
@@ -149,7 +149,7 @@ namespace Triangulation
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(934, 52);
+            this.button6.Location = new System.Drawing.Point(972, 52);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(184, 34);
             this.button6.TabIndex = 11;
@@ -159,7 +159,7 @@ namespace Triangulation
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(1124, 52);
+            this.button7.Location = new System.Drawing.Point(1162, 52);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(177, 34);
             this.button7.TabIndex = 12;
@@ -169,7 +169,7 @@ namespace Triangulation
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(1040, 92);
+            this.textBox3.Location = new System.Drawing.Point(1078, 92);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
             this.textBox3.TabIndex = 13;
@@ -177,7 +177,7 @@ namespace Triangulation
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(949, 95);
+            this.label2.Location = new System.Drawing.Point(987, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 14;
@@ -186,7 +186,7 @@ namespace Triangulation
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(952, 120);
+            this.checkBox1.Location = new System.Drawing.Point(990, 120);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(120, 17);
             this.checkBox1.TabIndex = 15;
@@ -196,7 +196,7 @@ namespace Triangulation
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(1078, 120);
+            this.checkBox2.Location = new System.Drawing.Point(1116, 120);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(113, 17);
             this.checkBox2.TabIndex = 16;
@@ -206,7 +206,7 @@ namespace Triangulation
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(1197, 120);
+            this.checkBox3.Location = new System.Drawing.Point(1235, 120);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(87, 17);
             this.checkBox3.TabIndex = 17;
@@ -216,7 +216,7 @@ namespace Triangulation
             // button8
             // 
             this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(934, 152);
+            this.button8.Location = new System.Drawing.Point(972, 152);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(93, 34);
             this.button8.TabIndex = 18;
@@ -227,7 +227,7 @@ namespace Triangulation
             // 
             // MyProg
             // 
-            this.ClientSize = new System.Drawing.Size(1307, 646);
+            this.ClientSize = new System.Drawing.Size(1351, 679);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
