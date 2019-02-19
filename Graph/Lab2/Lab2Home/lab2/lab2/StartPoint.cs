@@ -8,15 +8,15 @@ using System.Drawing;
 namespace Lab2
 {
     class StartPoint
-    {
-        Model MainModel = new Model();
-
+    { 
         [STAThread]
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // ususal shit
-            mainForm Program = new mainForm(); 
+            MainForm Program = new MainForm();
+            Model MainModel = new Model();
+            Controler MainControler = new Controler(MainModel, Program);
             Application.Run(Program); //creating and running our form is way to initialize all programm.
         }
     }

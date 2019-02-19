@@ -2,3 +2,11 @@ F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2Home\lab2\lab2\bin\Debug\lab2.exe
 F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2Home\lab2\lab2\bin\Debug\lab2.pdb
 F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.exe
 F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.pdb
+E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\bin\Debug\lab2.exe
+E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\bin\Debug\lab2.pdb
+E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.csprojAssemblyReference.cache
+E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\Lab2.mainForm.resources
+E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.csproj.GenerateResource.cache
+E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.csproj.CoreCompileInputs.cache
+E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.exe
+E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.pdb

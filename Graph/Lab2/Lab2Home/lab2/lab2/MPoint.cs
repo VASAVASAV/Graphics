@@ -9,8 +9,8 @@ namespace Lab2
 {
     class MPoint
     {
-        double[] coor;
-        List<MPoint> neighbours;
+        public double[] coor;
+        public List<MPoint> neighbours;
         public MPoint()
         {
             coor = new double[4];

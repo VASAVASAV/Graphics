@@ -7,7 +7,7 @@ namespace Lab2
 {
     class Figure
     {
-        List<MPoint> cells = new List<MPoint>();
+        public List<MPoint> cells = new List<MPoint>();
 
         bool IsChangeable;
 
