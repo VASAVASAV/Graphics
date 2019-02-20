@@ -11,7 +11,7 @@ namespace Lab2
 
         bool IsChangeable;
 
-        Figure(List<MPoint> newCells)
+        public Figure(List<MPoint> newCells)
         {
             IsChangeable = true;
             for (int i = 0; i < newCells.Count; i++)
@@ -20,7 +20,7 @@ namespace Lab2
             }
         }
 
-        Figure(List<MPoint> newCells, bool ChangeableInput)
+        public Figure(List<MPoint> newCells, bool ChangeableInput)
         {
             IsChangeable = ChangeableInput;
             for (int i = 0; i < newCells.Count; i++)
@@ -29,7 +29,7 @@ namespace Lab2
             }
         }
 
-        Figure(MPoint newCell)
+        public Figure(MPoint newCell)
         {
             IsChangeable = true;
             cells.Add(newCell);

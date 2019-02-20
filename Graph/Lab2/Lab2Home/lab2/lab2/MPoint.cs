@@ -110,5 +110,10 @@ namespace Lab2
             }
             return result;
         }
+
+        public double GetLength()
+        {
+            return Math.Sqrt(coor[0]*coor[0] + coor[1]*coor[1]+coor[2]*coor[2]);
+        }
     }
 }

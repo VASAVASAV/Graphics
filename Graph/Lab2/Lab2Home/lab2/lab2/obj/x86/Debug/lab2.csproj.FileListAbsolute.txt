@@ -10,3 +10,6 @@ E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.csproj.GenerateReso
 E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.csproj.CoreCompileInputs.cache
 E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.exe
 E:\work\Git\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.pdb
+F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.csprojResolveAssemblyReference.cache
+F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\Lab2.MainForm.resources
+F:\work\Graph\Code\Graphics\Graph\Lab2\Lab2Home\lab2\lab2\obj\x86\Debug\lab2.csproj.GenerateResource.Cache
