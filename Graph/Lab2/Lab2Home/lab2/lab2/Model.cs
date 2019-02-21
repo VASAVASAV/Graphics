@@ -8,8 +8,10 @@ namespace Lab2
     class Model
     {
         public Controler Cont3d;
-        public MPoint Center = new MPoint(300, -200, 500);
-        public MPoint CenterVec = new MPoint(-300, 200, -500);
+        public MPoint Center = new MPoint(300, 0, 0);
+        public MPoint CenterZVec = new MPoint(-300, 0, 0);
+        public MPoint CenterYVec = new MPoint(0, 0, 300);
+        public MPoint CenterXVec = new MPoint(0, 300,0);
 
         public bool Axon = false;
         public bool Persp = false;
@@ -22,10 +24,29 @@ namespace Lab2
         public List<Figure> Figs = new List<Figure>();
         public List<Figure> Planes = new List<Figure>();
 
+        public List<List<List<int>>> FigsSides = new List<List<List<int>>>();
+
         public Model()
         {
             List<MPoint> ML = new List<MPoint>();
-            ML.Add(new MPoint(0, 0, 0));
+            ML.Add(new MPoint(50, 50, 0));
+            ML.Add(new MPoint(25, -25, 0));
+            ML.Add(new MPoint(-50, -50, 0));
+            ML.Add(new MPoint(-25, 25, 0));
+            ML.Add(new MPoint(50, 50, 100));
+            ML.Add(new MPoint(25, -25, 100));
+            ML.Add(new MPoint(-50, -50, 100));
+            ML.Add(new MPoint(-25, 25, 100));
+            Figs.Add(new Figure(ML));
+            List<List<int>> Sides = new List<List<int>>();
+            List<int> Side = new List<int>();
+            Side.Add(0);
+            Side.Add(1);
+            Side.Add(2);
+            Side.Add(3);
+
+
+          /*  ML.Add(new MPoint(0, 0, 0));
             ML.Add(new MPoint(100, 0, 0));
             ML.Add(new MPoint(100, 100, 0));
             ML.Add(new MPoint(0, 100, 0));
@@ -46,7 +67,96 @@ namespace Lab2
             ML.Add(new MPoint(100, 0, 0));
             ML.Add(new MPoint(100, 0, 100));
             //ML.Add(new MPoint(25, 75, 25));
-            Lines.Add(new Figure(ML));
+            Lines.Add(new Figure(ML));*/
+        }
+
+        public void ChangeCenter(bool Xneed, bool Yneed, bool Zneed, double x, double y, double z)
+        {
+            if (Xneed)
+            {
+                Center.coor[0] = x;
+            }
+            if (Yneed)
+            {
+                Center.coor[1] = y;
+            }
+            if (Zneed)
+            {
+                Center.coor[2] = z;
+            }
+        }
+
+        public void TurnCamera(double zxAngle, double zyAngle, double xyAngle)
+        {
+            double[,] vecz = new double[1, 4];
+            double[,] vecy = new double[1, 4];
+            double[,] vecx = new double[1, 4];
+            double[,] op = new double[4, 4];
+
+            vecz[0, 0] = CenterZVec.coor[0];
+            vecz[0, 1] = CenterZVec.coor[1];
+            vecz[0, 2] = CenterZVec.coor[2];
+            vecz[0, 3] = CenterZVec.coor[3];
+
+            vecy[0, 0] = CenterYVec.coor[0];
+            vecy[0, 1] = CenterYVec.coor[1];
+            vecy[0, 2] = CenterYVec.coor[2];
+            vecy[0, 3] = CenterYVec.coor[3];
+
+            vecx[0, 0] = CenterXVec.coor[0];
+            vecx[0, 1] = CenterXVec.coor[1];
+            vecx[0, 2] = CenterXVec.coor[2];
+            vecx[0, 3] = CenterXVec.coor[3];
+            if (zxAngle != 0)
+            {
+                op[3, 3] = 1;
+                op[1, 1] = 1;
+                op[0, 0] = Math.Cos(zxAngle);
+                op[2, 2] = Math.Cos(zxAngle);
+                op[0, 2] = -1 * Math.Sin(zxAngle);
+                op[2, 0] = Math.Sin(zxAngle);
+                vecx = Matrixes.Multiply(vecx, op);
+                vecz = Matrixes.Multiply(vecz, op);
+
+            }
+            if (zyAngle != 0)
+            {
+                op[3, 3] = 1;
+                op[0, 0] = 1;
+                op[1, 1] = Math.Cos(zyAngle);
+                op[2, 2] = Math.Cos(zyAngle);
+                op[1, 2] = -1 * Math.Sin(zyAngle);
+                op[2, 1] = Math.Sin(zyAngle);
+                vecy = Matrixes.Multiply(vecy, op);
+                vecz = Matrixes.Multiply(vecz, op);
+
+            }
+            if (xyAngle != 0)
+            {
+                op[3, 3] = 1;
+                op[2, 2] = 1;
+                op[1, 1] = Math.Cos(xyAngle);
+                op[0, 0] = Math.Cos(xyAngle);
+                op[1, 0] = -1 * Math.Sin(xyAngle);
+                op[0, 1] = Math.Sin(xyAngle);
+                vecy = Matrixes.Multiply(vecy, op);
+                vecx = Matrixes.Multiply(vecx, op);
+
+            }
+            CenterZVec.coor[0]=vecz[0, 0];
+            CenterZVec.coor[1]=vecz[0, 1];
+            CenterZVec.coor[2]=vecz[0, 2];
+            CenterZVec.coor[3]=vecz[0, 3];
+           
+            CenterYVec.coor[0]=vecy[0, 0];
+            CenterYVec.coor[1]=vecy[0, 1];
+            CenterYVec.coor[2]=vecy[0, 2];
+            CenterYVec.coor[3]=vecy[0, 3];
+           
+            CenterXVec.coor[0]=vecx[0, 0];
+            CenterXVec.coor[1]=vecx[0, 1];
+            CenterXVec.coor[2]=vecx[0, 2];
+            CenterXVec.coor[3]=vecx[0, 3];
         }
 
         public void Move(double x, double y, double z)
@@ -215,6 +325,38 @@ namespace Lab2
                     Planes[i].cells[j].coor[1] = temp[j, 1];
                     Planes[i].cells[j].coor[2] = temp[j, 2];
                     Planes[i].cells[j].coor[2] = temp[j, 3];
+                }
+            }
+        }
+
+        public void Stretch(double x, double y, double z)
+        {
+            int i, j, k;
+            for (i = 0; i < Lines.Count; i++)
+            {
+                for (j = 0; j < Lines[i].cells.Count; j++)
+                {
+                    Lines[i].cells[j].coor[0] *=x;
+                    Lines[i].cells[j].coor[1] *=y;
+                    Lines[i].cells[j].coor[2] *=z;
+                }
+            }
+            for (i = 0; i < Figs.Count; i++)
+            {
+                for (j = 0; j < Figs[i].cells.Count; j++)
+                {
+                    Figs[i].cells[j].coor[0]*=x;
+                    Figs[i].cells[j].coor[1]*=y;
+                    Figs[i].cells[j].coor[2]*=z;
+                }
+            }
+            for (i = 0; i < Planes.Count; i++)
+            {
+                for (j = 0; j < Planes[i].cells.Count; j++)
+                {
+                    Planes[i].cells[j].coor[0] *= x;
+                    Planes[i].cells[j].coor[1] *= y;
+                    Planes[i].cells[j].coor[2] *= z;
                 }
             }
         }
