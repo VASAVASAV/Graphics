@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using MathParserNet;
 
 namespace Lab2
 {
@@ -94,6 +95,48 @@ namespace Lab2
         private TextBox textBox17;
         private Label label17;
         private CheckBox checkBox7;
+        private DataGridView dataGridView1;
+        private Button button6;
+        private TabPage tabPage16;
+        private TabPage tabPage17;
+        private TabPage tabPage18;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private Button button7;
+        private TextBox textBox23;
+        private Label label23;
+        private TextBox textBox22;
+        private Label label22;
+        private TextBox textBox21;
+        private Label label21;
+        private TextBox textBox20;
+        private Label label20;
+        private TextBox textBox19;
+        private Label label19;
+        private TextBox textBox18;
+        private Label label18;
+        private Button button8;
+        private TextBox textBox24;
+        private Label label24;
+        private TextBox textBox25;
+        private Label label25;
+        private TextBox textBox26;
+        private Label label26;
+        private TextBox textBox27;
+        private Label label27;
+        private TextBox textBox28;
+        private Label label28;
+        private TextBox textBox29;
+        private Label label29;
+        private DataGridView dataGridView2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private Button button9;
+        private TabPage tabPage19;
+        private TabPage tabPage20;
+        private Button button10;
         public Graphics MyGraph;
     
         private void InitializeComponent()
@@ -122,9 +165,50 @@ namespace Lab2
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button6 = new System.Windows.Forms.Button();
+            this.tabPage16 = new System.Windows.Forms.TabPage();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button9 = new System.Windows.Forms.Button();
+            this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.button8 = new System.Windows.Forms.Button();
+            this.textBox24 = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.textBox26 = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.textBox28 = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.textBox29 = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.tabPage18 = new System.Windows.Forms.TabPage();
+            this.button7 = new System.Windows.Forms.Button();
+            this.textBox23 = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.textBox21 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.tabPage19 = new System.Windows.Forms.TabPage();
+            this.tabPage20 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -182,6 +266,7 @@ namespace Lab2
             this.label11 = new System.Windows.Forms.Label();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.PanelFor2d.SuspendLayout();
@@ -190,6 +275,12 @@ namespace Lab2
             this.tabControl2.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabControl3.SuspendLayout();
+            this.tabPage13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.tabPage17.SuspendLayout();
+            this.tabPage18.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl4.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -457,6 +548,9 @@ namespace Lab2
             // tabControl3
             // 
             this.tabControl3.Controls.Add(this.tabPage13);
+            this.tabControl3.Controls.Add(this.tabPage16);
+            this.tabControl3.Controls.Add(this.tabPage17);
+            this.tabControl3.Controls.Add(this.tabPage18);
             this.tabControl3.Location = new System.Drawing.Point(6, 29);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
@@ -465,13 +559,363 @@ namespace Lab2
             // 
             // tabPage13
             // 
+            this.tabPage13.Controls.Add(this.dataGridView1);
+            this.tabPage13.Controls.Add(this.button6);
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage13.Size = new System.Drawing.Size(304, 338);
             this.tabPage13.TabIndex = 0;
-            this.tabPage13.Text = "tabPage13";
+            this.tabPage13.Text = "Ламана";
             this.tabPage13.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3});
+            this.dataGridView1.Location = new System.Drawing.Point(7, 7);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(291, 279);
+            this.dataGridView1.TabIndex = 1;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "X";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 80;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Y";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 80;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Z";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 80;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(7, 292);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(294, 40);
+            this.button6.TabIndex = 0;
+            this.button6.Text = "Додати";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // tabPage16
+            // 
+            this.tabPage16.Controls.Add(this.button10);
+            this.tabPage16.Controls.Add(this.dataGridView2);
+            this.tabPage16.Controls.Add(this.button9);
+            this.tabPage16.Location = new System.Drawing.Point(4, 22);
+            this.tabPage16.Name = "tabPage16";
+            this.tabPage16.Size = new System.Drawing.Size(304, 338);
+            this.tabPage16.TabIndex = 1;
+            this.tabPage16.Text = "Без\'є";
+            this.tabPage16.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3});
+            this.dataGridView2.Location = new System.Drawing.Point(5, 7);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(291, 233);
+            this.dataGridView2.TabIndex = 3;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "X";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 80;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Y";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 80;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Z";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 80;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(5, 292);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(294, 40);
+            this.button9.TabIndex = 2;
+            this.button9.Text = "Додати";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // tabPage17
+            // 
+            this.tabPage17.Controls.Add(this.button8);
+            this.tabPage17.Controls.Add(this.textBox24);
+            this.tabPage17.Controls.Add(this.label24);
+            this.tabPage17.Controls.Add(this.textBox25);
+            this.tabPage17.Controls.Add(this.label25);
+            this.tabPage17.Controls.Add(this.textBox26);
+            this.tabPage17.Controls.Add(this.label26);
+            this.tabPage17.Controls.Add(this.textBox27);
+            this.tabPage17.Controls.Add(this.label27);
+            this.tabPage17.Controls.Add(this.textBox28);
+            this.tabPage17.Controls.Add(this.label28);
+            this.tabPage17.Controls.Add(this.textBox29);
+            this.tabPage17.Controls.Add(this.label29);
+            this.tabPage17.Location = new System.Drawing.Point(4, 22);
+            this.tabPage17.Name = "tabPage17";
+            this.tabPage17.Size = new System.Drawing.Size(304, 338);
+            this.tabPage17.TabIndex = 2;
+            this.tabPage17.Text = "Сплайн";
+            this.tabPage17.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(3, 295);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(294, 40);
+            this.button8.TabIndex = 24;
+            this.button8.Text = "Додати";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // textBox24
+            // 
+            this.textBox24.Location = new System.Drawing.Point(90, 154);
+            this.textBox24.Name = "textBox24";
+            this.textBox24.Size = new System.Drawing.Size(100, 20);
+            this.textBox24.TabIndex = 23;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(35, 157);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(37, 13);
+            this.label24.TabIndex = 22;
+            this.label24.Text = "крок t";
+            // 
+            // textBox25
+            // 
+            this.textBox25.Location = new System.Drawing.Point(90, 128);
+            this.textBox25.Name = "textBox25";
+            this.textBox25.Size = new System.Drawing.Size(100, 20);
+            this.textBox25.TabIndex = 21;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(14, 131);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(74, 13);
+            this.label25.TabIndex = 20;
+            this.label25.Text = "права межа t";
+            // 
+            // textBox26
+            // 
+            this.textBox26.Location = new System.Drawing.Point(90, 102);
+            this.textBox26.Name = "textBox26";
+            this.textBox26.Size = new System.Drawing.Size(100, 20);
+            this.textBox26.TabIndex = 19;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(20, 105);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(64, 13);
+            this.label26.TabIndex = 18;
+            this.label26.Text = "ліва межа t";
+            // 
+            // textBox27
+            // 
+            this.textBox27.Location = new System.Drawing.Point(47, 69);
+            this.textBox27.Name = "textBox27";
+            this.textBox27.Size = new System.Drawing.Size(100, 20);
+            this.textBox27.TabIndex = 17;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(20, 72);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(21, 13);
+            this.label27.TabIndex = 16;
+            this.label27.Text = "z(t)";
+            // 
+            // textBox28
+            // 
+            this.textBox28.Location = new System.Drawing.Point(47, 43);
+            this.textBox28.Name = "textBox28";
+            this.textBox28.Size = new System.Drawing.Size(100, 20);
+            this.textBox28.TabIndex = 15;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(20, 46);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(21, 13);
+            this.label28.TabIndex = 14;
+            this.label28.Text = "y(t)";
+            // 
+            // textBox29
+            // 
+            this.textBox29.Location = new System.Drawing.Point(47, 17);
+            this.textBox29.Name = "textBox29";
+            this.textBox29.Size = new System.Drawing.Size(100, 20);
+            this.textBox29.TabIndex = 13;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(20, 20);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(21, 13);
+            this.label29.TabIndex = 12;
+            this.label29.Text = "x(t)";
+            // 
+            // tabPage18
+            // 
+            this.tabPage18.Controls.Add(this.button7);
+            this.tabPage18.Controls.Add(this.textBox23);
+            this.tabPage18.Controls.Add(this.label23);
+            this.tabPage18.Controls.Add(this.textBox22);
+            this.tabPage18.Controls.Add(this.label22);
+            this.tabPage18.Controls.Add(this.textBox21);
+            this.tabPage18.Controls.Add(this.label21);
+            this.tabPage18.Controls.Add(this.textBox20);
+            this.tabPage18.Controls.Add(this.label20);
+            this.tabPage18.Controls.Add(this.textBox19);
+            this.tabPage18.Controls.Add(this.label19);
+            this.tabPage18.Controls.Add(this.textBox18);
+            this.tabPage18.Controls.Add(this.label18);
+            this.tabPage18.Location = new System.Drawing.Point(4, 22);
+            this.tabPage18.Name = "tabPage18";
+            this.tabPage18.Size = new System.Drawing.Size(304, 338);
+            this.tabPage18.TabIndex = 3;
+            this.tabPage18.Text = "Формула";
+            this.tabPage18.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(3, 295);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(294, 40);
+            this.button7.TabIndex = 12;
+            this.button7.Text = "Додати";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // textBox23
+            // 
+            this.textBox23.Location = new System.Drawing.Point(79, 148);
+            this.textBox23.Name = "textBox23";
+            this.textBox23.Size = new System.Drawing.Size(100, 20);
+            this.textBox23.TabIndex = 11;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(24, 151);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(37, 13);
+            this.label23.TabIndex = 10;
+            this.label23.Text = "крок t";
+            // 
+            // textBox22
+            // 
+            this.textBox22.Location = new System.Drawing.Point(79, 122);
+            this.textBox22.Name = "textBox22";
+            this.textBox22.Size = new System.Drawing.Size(100, 20);
+            this.textBox22.TabIndex = 9;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(3, 125);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(74, 13);
+            this.label22.TabIndex = 8;
+            this.label22.Text = "права межа t";
+            // 
+            // textBox21
+            // 
+            this.textBox21.Location = new System.Drawing.Point(79, 96);
+            this.textBox21.Name = "textBox21";
+            this.textBox21.Size = new System.Drawing.Size(100, 20);
+            this.textBox21.TabIndex = 7;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(9, 99);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(64, 13);
+            this.label21.TabIndex = 6;
+            this.label21.Text = "ліва межа t";
+            // 
+            // textBox20
+            // 
+            this.textBox20.Location = new System.Drawing.Point(36, 63);
+            this.textBox20.Name = "textBox20";
+            this.textBox20.Size = new System.Drawing.Size(100, 20);
+            this.textBox20.TabIndex = 5;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(9, 66);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(21, 13);
+            this.label20.TabIndex = 4;
+            this.label20.Text = "z(t)";
+            // 
+            // textBox19
+            // 
+            this.textBox19.Location = new System.Drawing.Point(36, 37);
+            this.textBox19.Name = "textBox19";
+            this.textBox19.Size = new System.Drawing.Size(100, 20);
+            this.textBox19.TabIndex = 3;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(9, 40);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(21, 13);
+            this.label19.TabIndex = 2;
+            this.label19.Text = "y(t)";
+            // 
+            // textBox18
+            // 
+            this.textBox18.Location = new System.Drawing.Point(36, 11);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.Size = new System.Drawing.Size(100, 20);
+            this.textBox18.TabIndex = 1;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(9, 14);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(21, 13);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "x(t)";
             // 
             // tabPage3
             // 
@@ -486,6 +930,8 @@ namespace Lab2
             // tabControl4
             // 
             this.tabControl4.Controls.Add(this.tabPage14);
+            this.tabControl4.Controls.Add(this.tabPage19);
+            this.tabControl4.Controls.Add(this.tabPage20);
             this.tabControl4.Location = new System.Drawing.Point(6, 29);
             this.tabControl4.Name = "tabControl4";
             this.tabControl4.SelectedIndex = 0;
@@ -499,8 +945,26 @@ namespace Lab2
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage14.Size = new System.Drawing.Size(304, 338);
             this.tabPage14.TabIndex = 0;
-            this.tabPage14.Text = "tabPage14";
+            this.tabPage14.Text = "Поверхня обертання";
             this.tabPage14.UseVisualStyleBackColor = true;
+            // 
+            // tabPage19
+            // 
+            this.tabPage19.Location = new System.Drawing.Point(4, 22);
+            this.tabPage19.Name = "tabPage19";
+            this.tabPage19.Size = new System.Drawing.Size(304, 338);
+            this.tabPage19.TabIndex = 1;
+            this.tabPage19.Text = "Поверхня Кунса";
+            this.tabPage19.UseVisualStyleBackColor = true;
+            // 
+            // tabPage20
+            // 
+            this.tabPage20.Location = new System.Drawing.Point(4, 22);
+            this.tabPage20.Name = "tabPage20";
+            this.tabPage20.Size = new System.Drawing.Size(304, 338);
+            this.tabPage20.TabIndex = 2;
+            this.tabPage20.Text = "Поверхня Без\'є";
+            this.tabPage20.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
@@ -1058,6 +1522,16 @@ namespace Lab2
             this.label12.TabIndex = 14;
             this.label12.Text = "положення камери (х)";
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(7, 246);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(294, 40);
+            this.button10.TabIndex = 4;
+            this.button10.Text = "Зробити пінгвінчика";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(1181, 673);
@@ -1074,6 +1548,14 @@ namespace Lab2
             this.tabControl2.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
+            this.tabPage13.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.tabPage17.ResumeLayout(false);
+            this.tabPage17.PerformLayout();
+            this.tabPage18.ResumeLayout(false);
+            this.tabPage18.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabControl4.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
@@ -1326,27 +1808,27 @@ namespace Lab2
             }
             if (e.KeyCode == Keys.A)
             {
-                MyCont.TurnCamera(45, 0, 0);
+                MyCont.TurnCamera(3, 0, 0);
             }
             if (e.KeyCode == Keys.D)
             {
-                MyCont.TurnCamera(-45, 0, 0);
+                MyCont.TurnCamera(-3, 0, 0);
             }
             if (e.KeyCode == Keys.W)
             {
-                MyCont.TurnCamera(0, 45, 0);
+                MyCont.TurnCamera(0, 3, 0);
             }
             if (e.KeyCode == Keys.S)
             {
-                MyCont.TurnCamera(0, -45, 0);
+                MyCont.TurnCamera(0, -3, 0);
             }
             if (e.KeyCode == Keys.Q)
             {
-                MyCont.TurnCamera(0, 0, 45);
+                MyCont.TurnCamera(0, 0, 3);
             }
             if (e.KeyCode == Keys.E)
             {
-                MyCont.TurnCamera(0, 0, -45);
+                MyCont.TurnCamera(0, 0, -3);
             }
         }
 
@@ -1550,6 +2032,175 @@ namespace Lab2
             {
                 MyCont.Roberts = false;
             }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            int i, j, k;
+            if (dataGridView1.Rows.Count < 2)
+            {
+                return;
+            }
+            List<MPoint> NewLine = new List<MPoint>();
+            try
+            {
+                for (i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    NewLine.Add(new MPoint(Convert.ToDouble(dataGridView1.Rows[i].Cells[0].Value),Convert.ToDouble(dataGridView1.Rows[i].Cells[1].Value),Convert.ToDouble(dataGridView1.Rows[i].Cells[2].Value)));
+                }
+            }
+            catch
+            {
+                return;
+            }
+            MyCont.AddLine(NewLine,"broken");
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double lt, rt;
+            int step;
+            string xt, yt, zt;
+            xt = textBox18.Text;
+            yt = textBox19.Text;
+            zt = textBox20.Text;
+            try
+            {
+                lt = Convert.ToDouble(textBox21.Text);
+                rt = Convert.ToDouble(textBox22.Text);
+                if (lt >= rt)
+                    throw new Exception();
+                step = Convert.ToInt32(textBox23.Text);
+                if (step < 2)
+                    throw new Exception();
+            }
+            catch
+            {
+                return;
+            }
+            Parser MyPars = new Parser();
+            MyPars.AddVariable("e",Math.E);
+            MyPars.AddVariable("pi", Math.PI);
+            try
+            {
+                MyPars.AddVariable("t", lt);
+                MyPars.SimplifyDouble(xt);
+                MyPars.RemoveAllVariables();
+            }
+            catch
+            {
+                return;
+            }
+            MyCont.AddFormulaLine(xt,yt,zt,step,lt,rt);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            double lt, rt;
+            int step;
+            string xt, yt, zt;
+            xt = textBox29.Text;
+            yt = textBox28.Text;
+            zt = textBox27.Text;
+            try
+            {
+                lt = Convert.ToDouble(textBox26.Text);
+                rt = Convert.ToDouble(textBox25.Text);
+                if (lt >= rt)
+                    throw new Exception();
+                step = Convert.ToInt32(textBox24.Text);
+                if (step < 2)
+                    throw new Exception();
+            }
+            catch
+            {
+                return;
+            }
+            Parser MyPars = new Parser();
+            MyPars.AddVariable("e", Math.E);
+            MyPars.AddVariable("pi", Math.PI);
+            try
+            {
+                MyPars.AddVariable("t", lt);
+                MyPars.SimplifyDouble(xt);
+                MyPars.RemoveAllVariables();
+            }
+            catch
+            {
+                return;
+            }
+            MyCont.AddSplain(xt, yt, zt, step, lt, rt);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            int i, j, k;
+            if (dataGridView2.Rows.Count < 2)
+            {
+                return;
+            }
+            List<MPoint> NewLine = new List<MPoint>();
+            try
+            {
+                for (i = 0; i < dataGridView2.Rows.Count - 1; i++)
+                {
+                    NewLine.Add(new MPoint(Convert.ToDouble(dataGridView2.Rows[i].Cells[0].Value), Convert.ToDouble(dataGridView2.Rows[i].Cells[1].Value), Convert.ToDouble(dataGridView2.Rows[i].Cells[2].Value)));
+                }
+            }
+            catch
+            {
+                return;
+            }
+            MyCont.AddLine(NewLine, "bez");
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            int i, j, k;
+            List<MPoint> NewLine = new List<MPoint>();
+            NewLine.Add(new MPoint(0, 0));
+            NewLine.Add(new MPoint(200, 100));
+            NewLine.Add(new MPoint(400, 0));
+            MyCont.AddLine(NewLine, "bez");
+
+            NewLine = new List<MPoint>();
+            NewLine.Add(new MPoint(0, -100));
+            NewLine.Add(new MPoint(200, -200));
+            NewLine.Add(new MPoint(400, -100));
+            MyCont.AddLine(NewLine, "bez");
+
+            NewLine = new List<MPoint>();
+            NewLine.Add(new MPoint(0, -100));
+            NewLine.Add(new MPoint(150, -150));
+            NewLine.Add(new MPoint(300, -80));
+            MyCont.AddLine(NewLine, "bez");
+
+            NewLine = new List<MPoint>();
+            NewLine.Add(new MPoint(0, 0));
+            NewLine.Add(new MPoint(150, 50));
+            NewLine.Add(new MPoint(300, -20));
+            MyCont.AddLine(NewLine, "bez");
+
+            NewLine = new List<MPoint>();
+            NewLine.Add(new MPoint(400, -100));
+            NewLine.Add(new MPoint(300, -50));
+            NewLine.Add(new MPoint(400, 0));
+            MyCont.AddLine(NewLine, "bez");
+
+            NewLine = new List<MPoint>();
+            NewLine.Add(new MPoint(400, -100));
+            NewLine.Add(new MPoint(550, -65));
+            NewLine.Add(new MPoint(550, -35));
+            NewLine.Add(new MPoint(400, 0));
+            MyCont.AddLine(NewLine, "bez");
+
+            NewLine = new List<MPoint>();
+            NewLine.Add(new MPoint(00, -100));
+            NewLine.Add(new MPoint(50, -65));
+            NewLine.Add(new MPoint(50, -35));
+            NewLine.Add(new MPoint(00, 0));
+            MyCont.AddLine(NewLine, "bez");
         }
     }
 }

@@ -26,9 +26,12 @@ namespace Lab2
 
         public List<List<List<int>>> FigsSides = new List<List<List<int>>>();
 
+        public List<String> LineTypes = new List<string>();
+
         public Model()
         {
             List<MPoint> ML = new List<MPoint>();
+            /*
             ML.Add(new MPoint(50, 50, 0));
             ML.Add(new MPoint(25, -25, 0));
             ML.Add(new MPoint(-50, -50, 0));
@@ -81,9 +84,10 @@ namespace Lab2
           Side.Add(4);
           Sides.Add(Side);
           FigsSides.Add(Sides);
+             //*/
 
-
-            /*  ML.Add(new MPoint(0, 0, 0));
+            /*
+              ML.Add(new MPoint(0, 0, 0));
               ML.Add(new MPoint(100, 0, 0));
               ML.Add(new MPoint(100, 100, 0));
               ML.Add(new MPoint(0, 100, 0));
@@ -103,8 +107,11 @@ namespace Lab2
               ML.Add(new MPoint(100, 0, 100));
               ML.Add(new MPoint(100, 0, 0));
               ML.Add(new MPoint(100, 0, 100));
-              //ML.Add(new MPoint(25, 75, 25));*/
-           // Lines.Add(new Figure(ML));
+              ML.Add(new MPoint(25, 75, 25));
+            //*/
+
+            //Lines.Add(new Figure(ML));
+          //LineTypes.Add("broken");
         }
 
         public void ChangeCenter(bool Xneed, bool Yneed, bool Zneed, double x, double y, double z)
@@ -144,10 +151,10 @@ namespace Lab2
             vecx[0, 1] = CenterXVec.coor[1];
             vecx[0, 2] = CenterXVec.coor[2];
             vecx[0, 3] = CenterXVec.coor[3];
-            Console.WriteLine(vecx[0, 0]* vecy[0, 0]+ vecx[0, 1]* vecy[0, 1] + vecx[0, 2]* vecy[0, 2]);
-            Console.WriteLine(vecz[0, 0] * vecy[0, 0] + vecz[0, 1] * vecy[0, 1] + vecz[0, 2] * vecy[0, 2]);
-            Console.WriteLine(vecx[0, 0] * vecz[0, 0] + vecx[0, 1] * vecz[0, 1] + vecx[0, 2] * vecz[0, 2]);
-            Console.WriteLine();
+           // Console.WriteLine(vecx[0, 0]* vecy[0, 0]+ vecx[0, 1]* vecy[0, 1] + vecx[0, 2]* vecy[0, 2]);
+           // Console.WriteLine(vecz[0, 0] * vecy[0, 0] + vecz[0, 1] * vecy[0, 1] + vecz[0, 2] * vecy[0, 2]);
+           // Console.WriteLine(vecx[0, 0] * vecz[0, 0] + vecx[0, 1] * vecz[0, 1] + vecx[0, 2] * vecz[0, 2]);
+           // Console.WriteLine();
             if (zxAngle != 0)
             {
                 op[3, 3] = 1;
@@ -187,10 +194,10 @@ namespace Lab2
                 vecz = Matrixes.Multiply(vecz, op);
 
             }
-            Console.WriteLine(vecx[0, 0] * vecy[0, 0] + vecx[0, 1] * vecy[0, 1] + vecx[0, 2] * vecy[0, 2]);
-            Console.WriteLine(vecz[0, 0] * vecy[0, 0] + vecz[0, 1] * vecy[0, 1] + vecz[0, 2] * vecy[0, 2]);
-            Console.WriteLine(vecx[0, 0] * vecz[0, 0] + vecx[0, 1] * vecz[0, 1] + vecx[0, 2] * vecz[0, 2]);
-            Console.WriteLine();
+            //Console.WriteLine(vecx[0, 0] * vecy[0, 0] + vecx[0, 1] * vecy[0, 1] + vecx[0, 2] * vecy[0, 2]);
+            //Console.WriteLine(vecz[0, 0] * vecy[0, 0] + vecz[0, 1] * vecy[0, 1] + vecz[0, 2] * vecy[0, 2]);
+            //Console.WriteLine(vecx[0, 0] * vecz[0, 0] + vecx[0, 1] * vecz[0, 1] + vecx[0, 2] * vecz[0, 2]);
+            //Console.WriteLine();
             CenterZVec.coor[0]=vecz[0, 0];
             CenterZVec.coor[1]=vecz[0, 1];
             CenterZVec.coor[2]=vecz[0, 2];

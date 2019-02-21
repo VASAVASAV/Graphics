@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using MathParserNet;
 
 namespace Lab2
 {
@@ -57,15 +58,59 @@ namespace Lab2
             DrawAll();
         }
 
-        public void DrawAll()
+         public void AddLine(List<MPoint> NewLine, string type)
+         {
+             MModel.Lines.Add(new Figure(NewLine));
+             MModel.LineTypes.Add(type);
+             DrawAll();
+         }
+
+         public void AddFormulaLine(string xt, string yt, string zt, int step, double lt, double rt)
+         {
+             List<MPoint> ML = new List<MPoint>();
+             MPoint temp;
+             Parser MyPars = new Parser();
+             MyPars.AddVariable("e",Math.E);
+             MyPars.AddVariable("pi", Math.PI);
+             for (double i = lt; i <= rt; i += (rt - lt) / (step))
+             {
+                 MyPars.AddVariable("t", i);
+                 ML.Add(new MPoint(MyPars.SimplifyDouble(xt), MyPars.SimplifyDouble(yt), MyPars.SimplifyDouble(zt)));
+                 MyPars.RemoveVariable("t");
+             }
+             MModel.Lines.Add(new Figure(ML));
+             MModel.LineTypes.Add("form");
+             DrawAll();
+         }
+
+         public void AddSplain(string xt, string yt, string zt, int step, double lt, double rt)
+         {
+             List<MPoint> ML = new List<MPoint>();
+             MPoint temp;
+             Parser MyPars = new Parser();
+             MyPars.AddVariable("e", Math.E);
+             MyPars.AddVariable("pi", Math.PI);
+             for (double i = lt; i <= rt; i += (rt - lt) / (step))
+             {
+                 MyPars.AddVariable("t", i);
+                 ML.Add(new MPoint(MyPars.SimplifyDouble(xt), MyPars.SimplifyDouble(yt), MyPars.SimplifyDouble(zt)));
+                 MyPars.RemoveVariable("t");
+             }
+             MModel.Lines.Add(new Figure(ML));
+             MModel.LineTypes.Add("splain");
+             DrawAll();
+         }
+       
+         public void DrawAll()
         {
-            Pen BlackPen = new Pen(Color.Black, 5);
+            Pen BlackPen = new Pen(Color.Black, 3);
             Pen RedXPen = new Pen(Color.Red, 4);
             Pen BlueYPen = new Pen(Color.Blue, 4);
             Pen GreenZPen = new Pen(Color.Green, 4);
             Pen RedDarkXPen = new Pen(Color.DarkRed, 4);
             Pen BlueDarkYPen = new Pen(Color.DarkBlue, 4);
             Pen GreenDarkZPen = new Pen(Color.DarkSeaGreen, 4);
+            Pen CyanSplainPen = new Pen(Color.Cyan,3);
             Graphics Cur = View.panel1.CreateGraphics();
             Cur.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Cur.Clear(Color.White);
@@ -264,6 +309,241 @@ namespace Lab2
                     temp[j, 3] = MModel.Lines[i].cells[j].coor[3];
                 }
 
+                //////////
+
+                if (MModel.LineTypes[i] == "splain")
+                {
+                     temp = new double[(MModel.Lines[i].cells.Count)*25, 4];
+                    ////////////////
+                    Double[] ArrayX, ArrayY, ArrayZ, ArrayT;
+                    ArrayX = new double[MModel.Lines[i].cells.Count];
+                    ArrayY = new double[MModel.Lines[i].cells.Count];
+                    ArrayZ = new double[MModel.Lines[i].cells.Count];
+                    ArrayT = new double[MModel.Lines[i].cells.Count];
+                    for (j = 0; j < MModel.Lines[i].cells.Count; j++)
+                    {
+                        ArrayT[j] = j;
+                        ArrayX[j] = MModel.Lines[i].cells[j].coor[0];
+                        ArrayY[j] = MModel.Lines[i].cells[j].coor[1];
+                        ArrayZ[j] = MModel.Lines[i].cells[j].coor[2];
+                    }
+                    //Console.Write("lol");
+                    double[] Steps = new double[MModel.Lines[i].cells.Count - 1];
+                    double[] Inpa, Inpb, Inpc, Inpf;
+                    Inpa = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpb = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpc = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpf = new double[MModel.Lines[i].cells.Count - 1];
+                    for (j = 0; j < MModel.Lines[i].cells.Count - 1; j++)
+                    {
+                        Steps[j] = ArrayT[j + 1] - ArrayT[j];
+                    }
+                    //double[][] matrix = new double[MModel.Lines[i].cells.Count - 2][];
+                    for (j = 0; j < MModel.Lines[i].cells.Count - 2; j++)
+                    {
+                        Inpc[j] = 2 * (Steps[j] + Steps[j + 1]);
+                    }
+                    Inpc[MModel.Lines[i].cells.Count - 2] = 2 * (Steps[MModel.Lines[i].cells.Count - 2] + Steps[0]);
+                    for (j = 0; j < MModel.Lines[i].cells.Count - 2; j++)
+                    {
+                        Inpa[j] = Steps[j];
+                        Inpb[j] = Steps[j + 1];
+                    }
+                    Inpa[0] = Steps[MModel.Lines[i].cells.Count - 2];
+                    Inpb[0] = Steps[1];
+                    Inpa[MModel.Lines[i].cells.Count - 2] = Steps[MModel.Lines[i].cells.Count - 2];
+                    Inpb[MModel.Lines[i].cells.Count - 2] = Steps[0];
+                    for (j = 0; j < Inpf.Length - 1; j++)
+                    {
+                        Inpf[j] = 6 * (((ArrayX[j + 2] - ArrayX[j + 1]) / Steps[j + 1]) - ((ArrayX[j + 1] - ArrayX[j]) / Steps[j]));
+                    }
+                    Inpf[Inpf.Length - 1] = 0;//6 * (((ArrayX[0] - ArrayX[MModel.Lines[i].cells.Count - 1]) / Steps[0]) - ((ArrayX[MModel.Lines[i].cells.Count - 1] - ArrayX[MModel.Lines[i].cells.Count - 2]) / Steps[MModel.Lines[i].cells.Count - 2]));
+                    ////paaaaiiiiin
+                    //double[][] InputMatrix = new double[MModel.Lines[i].cells.Count - 2][];
+                    ////
+                    double[] newc = Geometry.CyclycWithoutMinuses(Inpa, Inpc, Inpb, Inpf);
+                    if (newc == null)
+                    {
+                       // textBox1.Text += "Cry loudly" + Environment.NewLine;
+                        return;
+                    }
+                    double[] cx = new double[MModel.Lines[i].cells.Count];
+                    double[] dx = new double[MModel.Lines[i].cells.Count];
+                    double[] bx = new double[MModel.Lines[i].cells.Count];
+                    double[] ax = new double[MModel.Lines[i].cells.Count];
+                    for (j = 1; j < MModel.Lines[i].cells.Count; j++)
+                    {
+                        cx[j] = newc[j - 1];
+                    }
+                    cx[0] = cx[MModel.Lines[i].cells.Count - 1];
+                    ax[0] = ArrayX[0];
+                    for (j = 1; j < MModel.Lines[i].cells.Count; j++)
+                    {
+                        dx[j] = (cx[j] - cx[j - 1]) / Steps[j - 1];
+                        ax[j] = ArrayX[j];
+                        bx[j] = 0.5 * Steps[j - 1] * cx[j] - (1.0 / 6) * Steps[j - 1] * Steps[j - 1] * dx[j] + ((ArrayX[j] - ArrayX[j - 1]) / Steps[j - 1]);
+                    }
+
+
+                    /////
+                    Steps = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpa = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpb = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpc = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpf = new double[MModel.Lines[i].cells.Count - 1];
+                    for (j = 0; j < MModel.Lines[i].cells.Count - 1; j++)
+                    {
+                        Steps[j] = ArrayT[j + 1] - ArrayT[j];
+                    }
+                    for (j = 0; j < MModel.Lines[i].cells.Count - 2; j++)
+                    {
+                        Inpc[j] = 2 * (Steps[j] + Steps[j + 1]);
+                    }
+                    Inpc[MModel.Lines[i].cells.Count - 2] = 2 * (Steps[MModel.Lines[i].cells.Count - 2] + Steps[0]);
+                    for (j = 1; j < MModel.Lines[i].cells.Count - 2; j++)
+                    {
+                        Inpa[j] = Steps[j];
+                        Inpb[j] = Steps[j + 1];
+                    }
+                    Inpa[0] = Steps[MModel.Lines[i].cells.Count - 2];
+                    Inpb[0] = Steps[1];
+                    Inpa[MModel.Lines[i].cells.Count - 2] = Steps[MModel.Lines[i].cells.Count - 2];
+                    Inpb[MModel.Lines[i].cells.Count - 2] = Steps[0];
+                    for (j = 0; j < Inpf.Length - 1; j++)
+                    {
+                        Inpf[j] = 6 * (((ArrayY[j + 2] - ArrayY[j + 1]) / Steps[j + 1]) - ((ArrayY[j + 1] - ArrayY[j]) / Steps[j]));
+                    }
+                    Inpf[Inpf.Length - 1] = 0;// 6 * (((ArrayY[1] - ArrayY[MModel.Lines[i].cells.Count - 1]) / Steps[0]) - ((ArrayY[MModel.Lines[i].cells.Count - 1] - ArrayY[MModel.Lines[i].cells.Count - 2]) / Steps[MModel.Lines[i].cells.Count - 2]));
+                    ////paaaaiiiiin
+                    ////
+                    newc = Geometry.CyclycWithoutMinuses(Inpa, Inpc, Inpb, Inpf);
+                    if (newc == null)
+                    {
+                        //textBox1.Text += "Cry loudly" + Environment.NewLine;
+                        return;
+                    }
+                    double[] cy = new double[MModel.Lines[i].cells.Count];
+                    double[] dy = new double[MModel.Lines[i].cells.Count];
+                    double[] by = new double[MModel.Lines[i].cells.Count];
+                    double[] ay = new double[MModel.Lines[i].cells.Count];
+                    for (j = 1; j < MModel.Lines[i].cells.Count; j++)
+                    {
+                        cy[j] = newc[j - 1];
+                    }
+                    cy[0] = cy[MModel.Lines[i].cells.Count - 1];
+                    ay[0] = ArrayY[0];
+                    for (j = 1; j < MModel.Lines[i].cells.Count; j++)
+                    {
+                        dy[j] = (cy[j] - cy[j - 1]) / Steps[j - 1];
+                        ay[j] = ArrayY[j];
+                        by[j] = 0.5 * Steps[j - 1] * cy[j] - (1.0 / 6) * Steps[j - 1] * Steps[j - 1] * dy[j] + ((ArrayY[j] - ArrayY[j - 1]) / Steps[j - 1]);
+                    }
+
+                    /////z
+                    Steps = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpa = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpb = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpc = new double[MModel.Lines[i].cells.Count - 1];
+                    Inpf = new double[MModel.Lines[i].cells.Count - 1];
+                    for (j = 0; j < MModel.Lines[i].cells.Count - 1; j++)
+                    {
+                        Steps[j] = ArrayT[j + 1] - ArrayT[j];
+                    }
+                    for (j = 0; j < MModel.Lines[i].cells.Count - 2; j++)
+                    {
+                        Inpc[j] = 2 * (Steps[j] + Steps[j + 1]);
+                    }
+                    Inpc[MModel.Lines[i].cells.Count - 2] = 2 * (Steps[MModel.Lines[i].cells.Count - 2] + Steps[0]);
+                    for (j = 1; j < MModel.Lines[i].cells.Count - 2; j++)
+                    {
+                        Inpa[j] = Steps[j];
+                        Inpb[j] = Steps[j + 1];
+                    }
+                    Inpa[0] = Steps[MModel.Lines[i].cells.Count - 2];
+                    Inpb[0] = Steps[1];
+                    Inpa[MModel.Lines[i].cells.Count - 2] = Steps[MModel.Lines[i].cells.Count - 2];
+                    Inpb[MModel.Lines[i].cells.Count - 2] = Steps[0];
+                    for (j = 0; j < Inpf.Length - 1; j++)
+                    {
+                        Inpf[j] = 6 * (((ArrayZ[j + 2] - ArrayZ[j + 1]) / Steps[j + 1]) - ((ArrayZ[j + 1] - ArrayZ[j]) / Steps[j]));
+                    }
+                    Inpf[Inpf.Length - 1] = 0;// 6 * (((ArrayZ[1] - ArrayZ[MModel.Lines[i].cells.Count - 1]) / Steps[0]) - ((ArrayZ[MModel.Lines[i].cells.Count - 1] - ArrayZ[MModel.Lines[i].cells.Count - 2]) / Steps[MModel.Lines[i].cells.Count - 2]));
+                    ////paaaaiiiiin
+                    ////
+                    newc = Geometry.CyclycWithoutMinuses(Inpa, Inpc, Inpb, Inpf);
+                    if (newc == null)
+                    {
+                        //textBox1.Text += "Cry loudly" + Environment.NewLine;
+                        return;
+                    }
+                    double[] cz = new double[MModel.Lines[i].cells.Count];
+                    double[] dz = new double[MModel.Lines[i].cells.Count];
+                    double[] bz = new double[MModel.Lines[i].cells.Count];
+                    double[] az = new double[MModel.Lines[i].cells.Count];
+                    for (j = 1; j < MModel.Lines[i].cells.Count; j++)
+                    {
+                        cz[j] = newc[j - 1];
+                    }
+                    cz[0] = cz[MModel.Lines[i].cells.Count - 1];
+                    az[0] = ArrayZ[0];
+                    for (j = 1; j < MModel.Lines[i].cells.Count; j++)
+                    {
+                        dz[j] = (cz[j] - cz[j - 1]) / Steps[j - 1];
+                        az[j] = ArrayZ[j];
+                        bz[j] = 0.5 * Steps[j - 1] * cz[j] - (1.0 / 6) * Steps[j - 1] * Steps[j - 1] * dz[j] + ((ArrayZ[j] - ArrayZ[j - 1]) / Steps[j - 1]);
+                    }
+
+                    /////z
+                    //chart1.Series[0].Points.Clear();
+                    double f;
+                     k=0;
+                    for (j = 1; j < MModel.Lines[i].cells.Count; j++)
+                    {
+                        for (f = ArrayT[j - 1]; f < ArrayT[j];k++, f = k*0.04)
+                        {
+                            temp[k,0] = ax[j]  + bx[j] * (f - ArrayT[j]) + (cx[j] / 2) * Math.Pow((f - ArrayT[j]), 2) + (dx[j] / 6) * Math.Pow((f - ArrayT[j]), 3);
+                            temp[k,1] = ay[j]  + by[j] * (f - ArrayT[j]) + (cy[j] / 2) * Math.Pow((f - ArrayT[j]), 2) + (dy[j] / 6) * Math.Pow((f - ArrayT[j]), 3);
+                            temp[k,2] = az[j]  + bz[j] * (f - ArrayT[j]) + (cz[j] / 2) * Math.Pow((f - ArrayT[j]), 2) + (dz[j] / 6) * Math.Pow((f - ArrayT[j]), 3);
+                            temp[k, 3] = 1;
+                        }
+                    }
+                    ////////////////
+                }
+
+                if (MModel.LineTypes[i] == "bez")
+                {
+                    k=0;
+                    double sum=0;
+                    temp = new double[(MModel.Lines[i].cells.Count-1) * 25 +1, 4];
+                    for (double t = 0; k < (MModel.Lines[i].cells.Count-1) * 25 +1;k++, t += 1d / ((MModel.Lines[i].cells.Count - 1) * 25))
+                    { 
+                        t = (t>1)?(1):(t);
+                        sum = 0;
+                        for(j=0; j <MModel.Lines[i].cells.Count; j++ )
+                        {
+                            sum+=MModel.Lines[i].cells[j].coor[0]*Geometry.Bernstein(MModel.Lines[i].cells.Count-1,j,t);
+                        }
+                        temp[k,0] = sum;
+
+                        sum = 0;
+                        for(j=0; j <MModel.Lines[i].cells.Count; j++ )
+                        {
+                            sum+=MModel.Lines[i].cells[j].coor[1]*Geometry.Bernstein(MModel.Lines[i].cells.Count-1,j,t);
+                        }
+                        temp[k,1] = sum;
+
+                        sum = 0;
+                        for(j=0; j <MModel.Lines[i].cells.Count; j++ )
+                        {
+                            sum+=MModel.Lines[i].cells[j].coor[2]*Geometry.Bernstein(MModel.Lines[i].cells.Count-1,j,t);
+                        }
+                        temp[k,2] = sum;
+                        temp[k, 3] = 1;
+                    }
+                }
+                /////////
+
+
                 if (Persp)
                 {
                     op = new double[4, 4];
@@ -388,17 +668,34 @@ namespace Lab2
 
                 }
 
-                for (j = 0; j < MModel.Lines[i].cells.Count; j++)
+                for (j = 0; j < temp.Length / 4; j++)
                 {
                     temp[j, 0] += View.panel1.Width / 2;
                     temp[j, 1] += View.panel1.Height / 2;
                 }
 
-                for (j = 1; j < MModel.Lines[i].cells.Count; j++)
+                if (MModel.LineTypes[i] == "broken" || MModel.LineTypes[i] == "splain" || MModel.LineTypes[i] == "bez")
                 {
-                    //if(temp[j - 1,2]>0 &&temp[j,2]>0)
-                    Cur.DrawLine(BlackPen, (int)temp[j - 1, 0], (int)temp[j - 1, 1], (int)temp[j, 0], (int)temp[j, 1]);
+                    for (j = 1; j < temp.Length/4; j++)
+                    {
+                        if (temp[j, 3] == 0 || temp[j - 1, 3] == 0)
+                            continue; 
+                        //if(temp[j - 1,2]>0 &&temp[j,2]>0)
+                        Cur.DrawLine(BlackPen, (int)temp[j - 1, 0], (int)temp[j - 1, 1], (int)temp[j, 0], (int)temp[j, 1]);
+                    }
                 }
+
+                if (MModel.LineTypes[i] == "form")
+                {
+                    for (j = 1; j < temp.Length / 4; j++)
+                    {
+                        if (temp[j, 3] == 0 || temp[j - 1, 3] == 0)
+                            continue;
+                        //if(temp[j - 1,2]>0 &&temp[j,2]>0)
+                        Cur.DrawLine(CyanSplainPen, (int)temp[j - 1, 0], (int)temp[j - 1, 1], (int)temp[j, 0], (int)temp[j, 1]);
+                    }
+                }
+               
                 // View.panel1.Refresh();
 
 
@@ -539,7 +836,7 @@ namespace Lab2
 
                 if (vecz[0, 2] < 0 || Math.Abs(vecz[0,1])>0.001 || Math.Abs(vecz[0, 0]) > 0.001 || vecy[0, 1] < 0 || Math.Abs(vecy[0, 2]) > 0.001 || Math.Abs(vecy[0, 0]) > 0.001 || vecx[0,0] < 0 || Math.Abs(vecx[0, 1]) > 0.001 || Math.Abs(vecx[0, 2]) > 0.001)
                 {
-                    Console.WriteLine();
+                   // Console.WriteLine();
                 }
 
                 for (j = 0; j < MModel.Figs[i].cells.Count; j++)
@@ -550,8 +847,12 @@ namespace Lab2
 
                 for (j = 0; j < MModel.FigsSides[i].Count; j++)
                 {
-                    if ((((temp[MModel.FigsSides[i][j][1], 0] - temp[MModel.FigsSides[i][j][0], 0]) * (temp[MModel.FigsSides[i][j][2], 1] - temp[MModel.FigsSides[i][j][0], 1])) - ((temp[MModel.FigsSides[i][j][1], 1] - temp[MModel.FigsSides[i][j][0], 1]) * (temp[MModel.FigsSides[i][j][2], 0] - temp[MModel.FigsSides[i][j][1], 0]))) >= 0 && Roberts)
+                    //if ((((temp[MModel.FigsSides[i][j][1], 0] - temp[MModel.FigsSides[i][j][0], 0]) * (temp[MModel.FigsSides[i][j][2], 1] - temp[MModel.FigsSides[i][j][0], 1])) - ((temp[MModel.FigsSides[i][j][1], 1] - temp[MModel.FigsSides[i][j][0], 1]) * (temp[MModel.FigsSides[i][j][2], 0] - temp[MModel.FigsSides[i][j][1], 0]))) >= 0 && Roberts)
+                        //continue;
+                    if (Roberts&&Geometry.IsRightFromLine(new MPoint(temp[MModel.FigsSides[i][j][0], 0], temp[MModel.FigsSides[i][j][0], 1]), new MPoint(temp[MModel.FigsSides[i][j][1], 0], temp[MModel.FigsSides[i][j][1], 1]), new MPoint(temp[MModel.FigsSides[i][j][2], 0], temp[MModel.FigsSides[i][j][2], 1])))
+                    {
                         continue;
+                    }
                     //if()
                     for (k = 0; k < MModel.FigsSides[i][j].Count-1; k++)
                     {
