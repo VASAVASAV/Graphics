@@ -8,10 +8,10 @@ namespace Lab2
     class Model
     {
         public Controler Cont3d;
-        public MPoint Center = new MPoint(300, 0, 0);
-        public MPoint CenterZVec = new MPoint(-300, 0, 0);
-        public MPoint CenterYVec = new MPoint(0, 0, 300);
-        public MPoint CenterXVec = new MPoint(0, 300,0);
+        public MPoint Center = new MPoint(300, 300, 300);
+        public MPoint CenterZVec = new MPoint(-300, -300, -300);
+        public MPoint CenterYVec = new MPoint(-50, -50, 100);
+        public MPoint CenterXVec = new MPoint(-300,300,0);
 
         public bool Axon = false;
         public bool Persp = false;
@@ -33,10 +33,10 @@ namespace Lab2
             ML.Add(new MPoint(25, -25, 0));
             ML.Add(new MPoint(-50, -50, 0));
             ML.Add(new MPoint(-25, 25, 0));
-            ML.Add(new MPoint(50, 50, 100));
-            ML.Add(new MPoint(25, -25, 100));
-            ML.Add(new MPoint(-50, -50, 100));
-            ML.Add(new MPoint(-25, 25, 100));
+            ML.Add(new MPoint(50, 50, 200));
+            ML.Add(new MPoint(25, -25, 200));
+            ML.Add(new MPoint(-50, -50, 200));
+            ML.Add(new MPoint(-25, 25, 200));
             Figs.Add(new Figure(ML));
             List<List<int>> Sides = new List<List<int>>();
             List<int> Side = new List<int>();
@@ -44,30 +44,67 @@ namespace Lab2
             Side.Add(1);
             Side.Add(2);
             Side.Add(3);
+            Sides.Add(Side);
+
+          Side = new List<int>();
+          Side.Add(0);
+          Side.Add(4);
+          Side.Add(5);
+          Side.Add(1);
+          Sides.Add(Side);
+          
+          Side = new List<int>();
+          Side.Add(0);
+          Side.Add(3);
+          Side.Add(7);
+          Side.Add(4);
+          Sides.Add(Side);
+          
+          Side = new List<int>();
+          Side.Add(7);
+          Side.Add(3);
+          Side.Add(2);
+          Side.Add(6);
+          Sides.Add(Side);
+          
+          Side = new List<int>();
+          Side.Add(6);
+          Side.Add(2);
+          Side.Add(1);
+          Side.Add(5);
+          Sides.Add(Side);
+          
+          Side = new List<int>();
+          Side.Add(7);
+          Side.Add(6);
+          Side.Add(5);
+          Side.Add(4);
+          Sides.Add(Side);
+          FigsSides.Add(Sides);
 
 
-          /*  ML.Add(new MPoint(0, 0, 0));
-            ML.Add(new MPoint(100, 0, 0));
-            ML.Add(new MPoint(100, 100, 0));
-            ML.Add(new MPoint(0, 100, 0));
-            ML.Add(new MPoint(0, 0, 0));
-            ML.Add(new MPoint(0, 0, 100));
-            ML.Add(new MPoint(0, 0, 100));
-            ML.Add(new MPoint(100, 0, 100));
-            ML.Add(new MPoint(100, 100, 100));
-            ML.Add(new MPoint(0, 100, 100));
-            ML.Add(new MPoint(0, 0, 100));
-            ML.Add(new MPoint(0, 100, 100));
-            ML.Add(new MPoint(0, 100, 0 ));
-            ML.Add(new MPoint(0, 100, 100));
-            ML.Add(new MPoint(100, 100, 100));
-            ML.Add(new MPoint(100, 100, 0));
-            ML.Add(new MPoint(100, 100, 100));
-            ML.Add(new MPoint(100, 0, 100));
-            ML.Add(new MPoint(100, 0, 0));
-            ML.Add(new MPoint(100, 0, 100));
-            //ML.Add(new MPoint(25, 75, 25));
-            Lines.Add(new Figure(ML));*/
+            /*  ML.Add(new MPoint(0, 0, 0));
+              ML.Add(new MPoint(100, 0, 0));
+              ML.Add(new MPoint(100, 100, 0));
+              ML.Add(new MPoint(0, 100, 0));
+              ML.Add(new MPoint(0, 0, 0));
+              ML.Add(new MPoint(0, 0, 100));
+              ML.Add(new MPoint(0, 0, 100));
+              ML.Add(new MPoint(100, 0, 100));
+              ML.Add(new MPoint(100, 100, 100));
+              ML.Add(new MPoint(0, 100, 100));
+              ML.Add(new MPoint(0, 0, 100));
+              ML.Add(new MPoint(0, 100, 100));
+              ML.Add(new MPoint(0, 100, 0 ));
+              ML.Add(new MPoint(0, 100, 100));
+              ML.Add(new MPoint(100, 100, 100));
+              ML.Add(new MPoint(100, 100, 0));
+              ML.Add(new MPoint(100, 100, 100));
+              ML.Add(new MPoint(100, 0, 100));
+              ML.Add(new MPoint(100, 0, 0));
+              ML.Add(new MPoint(100, 0, 100));
+              //ML.Add(new MPoint(25, 75, 25));*/
+           // Lines.Add(new Figure(ML));
         }
 
         public void ChangeCenter(bool Xneed, bool Yneed, bool Zneed, double x, double y, double z)
@@ -107,6 +144,10 @@ namespace Lab2
             vecx[0, 1] = CenterXVec.coor[1];
             vecx[0, 2] = CenterXVec.coor[2];
             vecx[0, 3] = CenterXVec.coor[3];
+            Console.WriteLine(vecx[0, 0]* vecy[0, 0]+ vecx[0, 1]* vecy[0, 1] + vecx[0, 2]* vecy[0, 2]);
+            Console.WriteLine(vecz[0, 0] * vecy[0, 0] + vecz[0, 1] * vecy[0, 1] + vecz[0, 2] * vecy[0, 2]);
+            Console.WriteLine(vecx[0, 0] * vecz[0, 0] + vecx[0, 1] * vecz[0, 1] + vecx[0, 2] * vecz[0, 2]);
+            Console.WriteLine();
             if (zxAngle != 0)
             {
                 op[3, 3] = 1;
@@ -116,6 +157,7 @@ namespace Lab2
                 op[0, 2] = -1 * Math.Sin(zxAngle);
                 op[2, 0] = Math.Sin(zxAngle);
                 vecx = Matrixes.Multiply(vecx, op);
+                vecy = Matrixes.Multiply(vecy, op);
                 vecz = Matrixes.Multiply(vecz, op);
 
             }
@@ -127,6 +169,7 @@ namespace Lab2
                 op[2, 2] = Math.Cos(zyAngle);
                 op[1, 2] = -1 * Math.Sin(zyAngle);
                 op[2, 1] = Math.Sin(zyAngle);
+                vecx = Matrixes.Multiply(vecx, op);
                 vecy = Matrixes.Multiply(vecy, op);
                 vecz = Matrixes.Multiply(vecz, op);
 
@@ -141,8 +184,13 @@ namespace Lab2
                 op[0, 1] = Math.Sin(xyAngle);
                 vecy = Matrixes.Multiply(vecy, op);
                 vecx = Matrixes.Multiply(vecx, op);
+                vecz = Matrixes.Multiply(vecz, op);
 
             }
+            Console.WriteLine(vecx[0, 0] * vecy[0, 0] + vecx[0, 1] * vecy[0, 1] + vecx[0, 2] * vecy[0, 2]);
+            Console.WriteLine(vecz[0, 0] * vecy[0, 0] + vecz[0, 1] * vecy[0, 1] + vecz[0, 2] * vecy[0, 2]);
+            Console.WriteLine(vecx[0, 0] * vecz[0, 0] + vecx[0, 1] * vecz[0, 1] + vecx[0, 2] * vecz[0, 2]);
+            Console.WriteLine();
             CenterZVec.coor[0]=vecz[0, 0];
             CenterZVec.coor[1]=vecz[0, 1];
             CenterZVec.coor[2]=vecz[0, 2];
@@ -282,7 +330,7 @@ namespace Lab2
                     Figs[i].cells[j].coor[0] = temp[j, 0];
                     Figs[i].cells[j].coor[1] = temp[j, 1];
                     Figs[i].cells[j].coor[2] = temp[j, 2];
-                    Figs[i].cells[j].coor[2] = temp[j, 3];
+                    Figs[i].cells[j].coor[3] = temp[j, 3];
                 }
             }
             for (i = 0; i < Planes.Count; i++)

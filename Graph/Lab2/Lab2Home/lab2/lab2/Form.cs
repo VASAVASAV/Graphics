@@ -93,6 +93,7 @@ namespace Lab2
         private Label label16;
         private TextBox textBox17;
         private Label label17;
+        private CheckBox checkBox7;
         public Graphics MyGraph;
     
         private void InitializeComponent()
@@ -174,6 +175,7 @@ namespace Lab2
             this.label15 = new System.Windows.Forms.Label();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
@@ -980,6 +982,7 @@ namespace Lab2
             // 
             // tabPage15
             // 
+            this.tabPage15.Controls.Add(this.checkBox7);
             this.tabPage15.Controls.Add(this.textBox10);
             this.tabPage15.Controls.Add(this.label10);
             this.tabPage15.Controls.Add(this.textBox11);
@@ -992,6 +995,17 @@ namespace Lab2
             this.tabPage15.TabIndex = 11;
             this.tabPage15.Text = "Камера";
             this.tabPage15.UseVisualStyleBackColor = true;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(76, 161);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(109, 17);
+            this.checkBox7.TabIndex = 20;
+            this.checkBox7.Text = "Метод Робертса";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
             // 
             // textBox10
             // 
@@ -1312,27 +1326,27 @@ namespace Lab2
             }
             if (e.KeyCode == Keys.A)
             {
-                MyCont.TurnCamera(2, 0, 0);
+                MyCont.TurnCamera(45, 0, 0);
             }
             if (e.KeyCode == Keys.D)
             {
-                MyCont.TurnCamera(-2, 0, 0);
+                MyCont.TurnCamera(-45, 0, 0);
             }
             if (e.KeyCode == Keys.W)
             {
-                MyCont.TurnCamera(0,2,0);
+                MyCont.TurnCamera(0, 45, 0);
             }
             if (e.KeyCode == Keys.S)
             {
-                MyCont.TurnCamera(0, -2, 0);
+                MyCont.TurnCamera(0, -45, 0);
             }
             if (e.KeyCode == Keys.Q)
             {
-                MyCont.TurnCamera(0, 0, 2);
+                MyCont.TurnCamera(0, 0, 45);
             }
             if (e.KeyCode == Keys.E)
             {
-                MyCont.TurnCamera(0, 0, -2);
+                MyCont.TurnCamera(0, 0, -45);
             }
         }
 
@@ -1526,5 +1540,16 @@ namespace Lab2
             }
         }
 
+        private void checkBox7_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox7.Checked)
+            {
+                MyCont.Roberts = true;
+            }
+            else
+            {
+                MyCont.Roberts = false;
+            }
+        }
     }
 }
