@@ -27,6 +27,8 @@ namespace Lab2
         public List<List<List<int>>> FigsSides = new List<List<List<int>>>();
 
         public List<String> LineTypes = new List<string>();
+        public List<String> PlaneTypes = new List<string>();
+        public List<int> PlanesAddINfo = new List<int>();
 
         public Model()
         {

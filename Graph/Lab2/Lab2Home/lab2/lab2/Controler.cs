@@ -100,7 +100,188 @@ namespace Lab2
              MModel.LineTypes.Add("splain");
              DrawAll();
          }
-       
+
+         public void AddRoundPlane(string xt, string yt, string zt, double lt, double rt, int stept, int stepfi, int stepfis, MPoint p1, MPoint p2)
+         {
+             List<MPoint> ML = new List<MPoint>();
+             ML.Add(p1);
+             ML.Add(p2);
+             MModel.Lines.Add(new Figure(ML));
+             MModel.LineTypes.Add("broken");
+
+             double[,] E = new double[4, 4];
+             E[0, 0] = 1;
+             E[1, 1] = 1;
+             E[2, 2] = 1;
+             E[3, 3] = 1;
+
+             double[,] op = new double[4, 4];
+             double[,] temp;
+             double fi;
+
+             double[,] vec = new double[1, 4];
+             vec[0, 0] = p2.coor[0] - p1.coor[0];
+             vec[0, 1] = p2.coor[1] - p1.coor[1];
+             vec[0, 2] = p2.coor[2] - p1.coor[2];
+             vec[0, 3] = 1;
+
+             fi = Math.Atan((vec[0, 0] / vec[0, 2]));
+             fi *= (vec[0, 0] > 0) ? (-1) : (-1);
+             op = new double[4, 4];
+             op[3, 3] = 1;
+             op[1, 1] = 1;
+             op[0, 0] = Math.Cos(fi);
+             op[2, 2] = Math.Cos(fi);
+             op[0, 2] = Math.Sin(fi);
+             op[2, 0] = -1*Math.Sin(fi);
+             vec = Matrixes.Multiply(vec, op);
+             E = Matrixes.Multiply(E, Matrixes.GetReverse(op, 4));
+
+             fi = Math.Atan((vec[0, 1] / vec[0, 2]));
+             fi *= (vec[0, 1] > 0) ? (-1) : (1);
+             op = new double[4, 4];
+             op[3, 3] = 1;
+             op[0, 0] = 1;
+             op[1, 1] = Math.Cos(fi);
+             op[2, 2] = Math.Cos(fi);
+             op[1, 2] = Math.Sin(fi);
+             op[2, 1] = -1*Math.Sin(fi);
+             vec = Matrixes.Multiply(vec, op);
+             E = Matrixes.Multiply(E, Matrixes.GetReverse(op, 4));
+
+
+             fi = (2*Math.PI)/ stepfis;
+             op = new double[4, 4];
+             op[3, 3] = 1;
+             op[2, 2] = 1;
+             op[0, 0] = Math.Cos(fi);
+             op[1, 1] = Math.Cos(fi);
+             op[1, 0] = Math.Sin(fi);
+             op[0, 1] = -1 * Math.Sin(fi);
+             temp = new double[stept+1, 4];
+             Parser MyPars = new Parser();
+             MyPars.AddVariable("e", Math.E);
+             MyPars.AddVariable("pi", Math.PI);
+
+             for (int i=0; i < stept; i++)
+             {
+                 MyPars.AddVariable("t", lt + i * ((rt - lt) / stept));
+                 temp[i,0] = MyPars.SimplifyDouble(xt);
+                 temp[i,1] =MyPars.SimplifyDouble(yt);
+                 temp[i,2] =MyPars.SimplifyDouble(zt);
+                 temp[i, 3] = 1;
+                 MyPars.RemoveVariable("t");
+             }
+
+             for (int i = 0; i < stepfis; i++)
+             {
+                 ML = new List<MPoint>();
+                 for (int j = 0; j < stept; j++)
+                 {
+                     ML.Add(new MPoint(temp[j, 0], temp[j, 1], temp[j, 2]));
+                 }
+                 MModel.Planes.Add(new Figure(ML));
+                 MModel.PlaneTypes.Add("ober");
+                 MModel.PlanesAddINfo.Add(0);
+                 temp = Matrixes.Multiply(temp, op);
+             }
+             double st = lt;
+
+             op = new double[4, 4];
+             op[3, 3] = 1;
+             op[2, 2] = 1;
+             op[0, 0] = Math.Cos(Math.PI/180);
+             op[1, 1] = Math.Cos(Math.PI / 180);
+             op[1, 0] = Math.Sin(Math.PI / 180);
+             op[0, 1] = -1 * Math.Sin(Math.PI / 180);
+
+             for (int i = 0; i < stepfi; i++)
+             {
+                 st = lt + i * ((rt - lt)/stepfi);
+                 ML = new List<MPoint>();
+                 MyPars.AddVariable("t", st);
+                 temp = new double[1, 4];
+                 temp[0, 0] = MyPars.SimplifyDouble(xt);
+                 temp[0, 1] = MyPars.SimplifyDouble(yt);
+                 temp[0, 2] = MyPars.SimplifyDouble(zt);
+                 temp[0, 3] = 1;
+                 MyPars.RemoveVariable("t");
+                 for (int j = 0; j < 360; j++)
+                 {
+                     ML.Add(new MPoint(temp[0, 0], temp[0, 1], temp[0, 2]));
+                     temp = Matrixes.Multiply(temp, op);
+                 }
+                 MModel.Planes.Add(new Figure(ML));
+                 MModel.PlaneTypes.Add("ober");
+                 MModel.PlanesAddINfo.Add(0);
+             }
+             DrawAll();
+
+         }
+
+         public void BuildKuns(double [,] Xmat, double [,] Ymat, double [,] Zmat, int steps)
+         {
+             List<MPoint> ML = new List<MPoint>();
+             int i, j, k;
+             for (i = 0; i < 2; i++)
+             {
+                 for (j = 0; j < 2; j++)
+                 {
+                     ML.Add(new MPoint(Xmat[i,j],Ymat[i,j], Zmat[i,j]));
+                 }
+             }
+             for (i = 2; i < 4; i++)
+             {
+                 for (j = 0; j < 2; j++)
+                 {
+                     ML.Add(new MPoint(Xmat[i, j], Ymat[i, j], Zmat[i, j]));
+                 }
+             }
+             for (i = 0; i < 2; i++)
+             {
+                 for (j = 2; j < 4; j++)
+                 {
+                     ML.Add(new MPoint(Xmat[i, j], Ymat[i, j], Zmat[i, j]));
+                 }
+             }
+             for (i = 2; i < 4; i++)
+             {
+                 for (j = 2; j < 4; j++)
+                 {
+                     ML.Add(new MPoint(Xmat[i, j], Ymat[i, j], Zmat[i, j]));
+                 }
+             }
+             MModel.Planes.Add(new Figure(ML));
+             MModel.PlaneTypes.Add("kuns");
+             MModel.PlanesAddINfo.Add(0);
+             DrawAll();
+         }
+
+         public void BuildPlaneBez(List<MPoint> ML, int length)
+         {
+             MModel.Planes.Add(new Figure(ML));
+             MModel.PlaneTypes.Add("bez");
+             MModel.PlanesAddINfo.Add(length);
+             DrawAll();
+         }
+
+
+         public double[] Q(double u, double v, double[,] Xmat, double[,] Ymat, double[,] Zmat)
+         {
+            double[,] Fu = new double [1,4], Fv = new double [4,1];
+            Fu[0, 0] = 2 * u * u * u - 3 * u * u + 1;
+            Fu[0, 1] = -2 * u * u * u + 3 * u * u;
+            Fu[0, 2] = u * u * u - 2 * u * u + u;
+            Fu[0, 3] = u * u * u - u * u;
+
+            Fv[0, 0] = 2 * v * v * v - 3 * v * v + 1;
+            Fv[1, 0] = -2 * v * v * v + 3 * v * v;
+            Fv[2, 0] = v * v * v - 2 * v * v + v;
+            Fv[3, 0] = v * v * v - v * v;
+
+            return new double[] { Matrixes.Multiply(Matrixes.Multiply(Fu, Xmat), Fv)[0, 0], Matrixes.Multiply(Matrixes.Multiply(Fu, Ymat), Fv)[0, 0], Matrixes.Multiply(Matrixes.Multiply(Fu, Zmat), Fv)[0, 0] };
+         }
+
          public void DrawAll()
         {
             Pen BlackPen = new Pen(Color.Black, 3);
@@ -861,6 +1042,345 @@ namespace Lab2
                     }
                     if (!(Roberts && ((temp[MModel.FigsSides[i][j][k], 2] < 0) && (temp[MModel.FigsSides[i][j][0], 2] < 0))))
                         Cur.DrawLine(BlackPen, (int)temp[MModel.FigsSides[i][j][k], 0], (int)temp[MModel.FigsSides[i][j][k], 1], (int)temp[MModel.FigsSides[i][j][0], 0], (int)temp[MModel.FigsSides[i][j][0], 1]);
+                }
+                // View.panel1.Refresh();
+
+
+            }
+
+             //////////
+
+            for (i = 0; i < MModel.Planes.Count; i++)
+            {
+                temp = new double[MModel.Planes[i].cells.Count, 4];
+                for (j = 0; j < MModel.Planes[i].cells.Count; j++)
+                {
+                    temp[j, 0] = MModel.Planes[i].cells[j].coor[0];
+                    temp[j, 1] = MModel.Planes[i].cells[j].coor[1];
+                    temp[j, 2] = MModel.Planes[i].cells[j].coor[2];
+                    temp[j, 3] = MModel.Planes[i].cells[j].coor[3];
+                }
+
+                if (MModel.PlaneTypes[i] == "bez")
+                {
+                    temp = new double[8, 4];
+                    int s =0;
+                    int r,v;
+                    double sum;
+                    for (j = 0; j < 2; j++)
+                    {
+                        for (k = 0; k < 2; k++)
+                        {
+                            sum = 0;
+                            for(v=0; v < MModel.Planes[i].cells.Count/MModel.PlanesAddINfo[i]; v++)
+                            {
+                                for(r=0; r < MModel.PlanesAddINfo[i]; r++)
+                                {
+                                    sum += Geometry.Bernstein(MModel.PlanesAddINfo[i], r, k * 1) * Geometry.Bernstein(MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i], v, j * 1) * MModel.Planes[i].cells[v * MModel.PlanesAddINfo[i] + r].coor[0];
+                                }
+                            }
+                            temp[s,0] = sum;
+
+                            sum = 0;
+                            for (v = 0; v < MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i]; v++)
+                            {
+                                for (r = 0; r < MModel.PlanesAddINfo[i]; r++)
+                                {
+                                    sum += Geometry.Bernstein(MModel.PlanesAddINfo[i], r, k * 1) * Geometry.Bernstein(MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i], v, j * 1) * MModel.Planes[i].cells[v * MModel.PlanesAddINfo[i] + r].coor[1];
+                                }
+                            }
+                            temp[s,1] = sum;
+
+                            sum = 0;
+                            for (v = 0; v < MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i]; v++)
+                            {
+                                for (r = 0; r < MModel.PlanesAddINfo[i]; r++)
+                                {
+                                    sum += Geometry.Bernstein(MModel.PlanesAddINfo[i], r, k * 1) * Geometry.Bernstein(MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i], v, j * 1) * MModel.Planes[i].cells[v * MModel.PlanesAddINfo[i] + r].coor[2];
+                                }
+                            }
+                            temp[s,2] = sum;
+
+                            temp[s,3] = 1;
+                            s++;
+                        }
+                    }
+                    for (j = 0; j < 2; j++)
+                    {
+                        for (k = 0; k < 2; k++)
+                        {
+                            sum = 0;
+                            for (v = 0; v < MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i]; v++)
+                            {
+                                for (r = 0; r < MModel.PlanesAddINfo[i]; r++)
+                                {
+                                    sum += Geometry.Bernstein(MModel.PlanesAddINfo[i], r, k * 1) * Geometry.Bernstein(MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i], v, j * 1) * MModel.Planes[i].cells[v * MModel.PlanesAddINfo[i] + r].coor[0];
+                                }
+                            }
+                            temp[s, 0] = sum;
+
+                            sum = 0;
+                            for (v = 0; v < MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i]; v++)
+                            {
+                                for (r = 0; r < MModel.PlanesAddINfo[i]; r++)
+                                {
+                                    sum += Geometry.Bernstein(MModel.PlanesAddINfo[i], r, k * 1) * Geometry.Bernstein(MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i], v, j * 1) * MModel.Planes[i].cells[v * MModel.PlanesAddINfo[i] + r].coor[1];
+                                }
+                            }
+                            temp[s, 1] = sum;
+
+                            sum = 0;
+                            for (v = 0; v < MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i]; v++)
+                            {
+                                for (r = 0; r < MModel.PlanesAddINfo[i]; r++)
+                                {
+                                    sum += Geometry.Bernstein(MModel.PlanesAddINfo[i], r, k * 1) * Geometry.Bernstein(MModel.Planes[i].cells.Count / MModel.PlanesAddINfo[i], v, j * 1) * MModel.Planes[i].cells[v * MModel.PlanesAddINfo[i] + r].coor[2];
+                                }
+                            }
+                            temp[s, 2] = sum;
+
+                            temp[s, 3] = 1;
+                            s++;
+                        }
+                    }
+                }
+
+                if (MModel.PlaneTypes[i] == "kuns")
+                {
+                    ////////////////////
+
+                    double[,] Xmat = new double[4, 4], Ymat = new double[4, 4], Zmat = new double[4, 4];
+
+
+                     Xmat[0, 0] = MModel.Planes[i].cells[0].coor[0];
+                     Xmat[0, 1] = MModel.Planes[i].cells[1].coor[0];
+                     Xmat[1, 0] = MModel.Planes[i].cells[2].coor[0];
+                     Xmat[1, 1] = MModel.Planes[i].cells[3].coor[0];
+                                 
+                     Xmat[2, 0] = MModel.Planes[i].cells[4].coor[0];
+                     Xmat[2, 1] = MModel.Planes[i].cells[5].coor[0];
+                     Xmat[3, 0] = MModel.Planes[i].cells[6].coor[0];
+                     Xmat[3, 1] = MModel.Planes[i].cells[7].coor[0];
+                                 
+                     Xmat[0, 2] = MModel.Planes[i].cells[8].coor[0];
+                     Xmat[0, 3] = MModel.Planes[i].cells[9].coor[0];
+                     Xmat[1, 2] = MModel.Planes[i].cells[10].coor[0];
+                     Xmat[1, 3] = MModel.Planes[i].cells[11].coor[0];
+                             
+                     Xmat[2, 2] = MModel.Planes[i].cells[12].coor[0];
+                     Xmat[2, 3] = MModel.Planes[i].cells[13].coor[0];
+                     Xmat[3, 2] = MModel.Planes[i].cells[14].coor[0];
+                     Xmat[3, 3] = MModel.Planes[i].cells[15].coor[0];
+                     
+                     //////
+
+                     Ymat[0, 0] = MModel.Planes[i].cells[0].coor[1];
+                     Ymat[0, 1] = MModel.Planes[i].cells[1].coor[1];
+                     Ymat[1, 0] = MModel.Planes[i].cells[2].coor[1];
+                     Ymat[1, 1] = MModel.Planes[i].cells[3].coor[1];
+
+                     Ymat[2, 0] = MModel.Planes[i].cells[4].coor[1];
+                     Ymat[2, 1] = MModel.Planes[i].cells[5].coor[1];
+                     Ymat[3, 0] = MModel.Planes[i].cells[6].coor[1];
+                     Ymat[3, 1] = MModel.Planes[i].cells[7].coor[1];
+
+                     Ymat[0, 2] = MModel.Planes[i].cells[8].coor[1];
+                     Ymat[0, 3] = MModel.Planes[i].cells[9].coor[1];
+                     Ymat[1, 2] = MModel.Planes[i].cells[10].coor[1];
+                     Ymat[1, 3] = MModel.Planes[i].cells[11].coor[1];
+
+                     Ymat[2, 2] = MModel.Planes[i].cells[12].coor[1];
+                     Ymat[2, 3] = MModel.Planes[i].cells[13].coor[1];
+                     Ymat[3, 2] = MModel.Planes[i].cells[14].coor[1];
+                     Ymat[3, 3] = MModel.Planes[i].cells[15].coor[1];
+                     
+                     ///////
+
+                     Zmat[0, 0] = MModel.Planes[i].cells[0].coor[2];
+                     Zmat[0, 1] = MModel.Planes[i].cells[1].coor[2];
+                     Zmat[1, 0] = MModel.Planes[i].cells[2].coor[2];
+                     Zmat[1, 1] = MModel.Planes[i].cells[3].coor[2];
+
+                     Zmat[2, 0] = MModel.Planes[i].cells[4].coor[2];
+                     Zmat[2, 1] = MModel.Planes[i].cells[5].coor[2];
+                     Zmat[3, 0] = MModel.Planes[i].cells[6].coor[2];
+                     Zmat[3, 1] = MModel.Planes[i].cells[7].coor[2];
+
+                     Zmat[0, 2] = MModel.Planes[i].cells[8].coor[2];
+                     Zmat[0, 3] = MModel.Planes[i].cells[9].coor[2];
+                     Zmat[1, 2] = MModel.Planes[i].cells[10].coor[2];
+                     Zmat[1, 3] = MModel.Planes[i].cells[11].coor[2];
+
+                     Zmat[2, 2] = MModel.Planes[i].cells[12].coor[2];
+                     Zmat[2, 3] = MModel.Planes[i].cells[13].coor[2];
+                     Zmat[3, 2] = MModel.Planes[i].cells[14].coor[2];
+                     Zmat[3, 3] = MModel.Planes[i].cells[15].coor[2];
+
+                    ///////////
+                    temp = new double[2000, 4];
+                    double[] vault;
+                    int s=0;
+                    double u=0,v=0;
+                    for(j=0; j <10; j++)
+                    {
+                        for (k = 0; k < 100; k++)
+                        {
+                            vault = Q(j*(0.125),k*(0.01),Xmat,Ymat,Zmat);
+                            temp[s, 0] = vault[0];
+                            temp[s, 1] = vault[1];
+                            temp[s, 2] = vault[2];
+                            s++;
+                        }
+                    }
+                    for (j = 0; j < 10; j++)
+                    {
+                        for (k = 0; k < 100; k++)
+                        {
+                            vault = Q( k * (0.01),j * (0.125), Xmat, Ymat, Zmat);
+                            temp[s, 0] = vault[0];
+                            temp[s, 1] = vault[1];
+                            temp[s, 2] = vault[2];
+                            s++;
+                        }
+                    }
+                }
+
+                if (Persp)
+                {
+                    op = new double[4, 4];
+                    op[0, 0] = 1;
+                    op[1, 1] = 1;
+                    op[2, 2] = 1;
+                    op[3, 3] = 1;
+                    op[0, 3] = 1 / PerspPar[0];
+                    op[1, 3] = 1 / PerspPar[1];
+                    op[2, 3] = 1 / PerspPar[2];
+                    temp = Matrixes.Multiply(temp, op);
+                    for (j = 0; j < MModel.Planes[i].cells.Count; j++)
+                    {
+                        temp[j, 0] /= temp[j, 3];
+                        temp[j, 1] /= temp[j, 3];
+                        temp[j, 2] /= temp[j, 3];
+                        temp[j, 3] /= temp[j, 3];
+                    }
+                    // for()
+                }
+
+                if (Cosc)
+                {
+                    op = new double[4, 4];
+                    op[0, 0] = 1;
+                    op[1, 1] = 1;
+                    op[2, 2] = 1;
+                    op[3, 3] = 1;
+                    op[2, 0] = CoscPar[1] * Math.Cos(CoscPar[0]);
+                    op[2, 1] = -1 * CoscPar[1] * Math.Sin(CoscPar[0]);
+                    temp = Matrixes.Multiply(temp, op);
+                    // for()
+                }
+
+                for (j = 0; j < MModel.Planes[i].cells.Count; j++)
+                {
+                    temp[j, 0] -= MModel.Center.coor[0];
+                    temp[j, 1] -= MModel.Center.coor[1];
+                    temp[j, 2] -= MModel.Center.coor[2];
+                }
+
+                vecz[0, 0] = MModel.CenterZVec.coor[0];
+                vecz[0, 1] = MModel.CenterZVec.coor[1];
+                vecz[0, 2] = MModel.CenterZVec.coor[2];
+                vecz[0, 3] = MModel.CenterZVec.coor[3];
+
+                vecy[0, 0] = MModel.CenterYVec.coor[0];
+                vecy[0, 1] = MModel.CenterYVec.coor[1];
+                vecy[0, 2] = MModel.CenterYVec.coor[2];
+                vecy[0, 3] = MModel.CenterYVec.coor[3];
+
+                vecx[0, 0] = MModel.CenterXVec.coor[0];
+                vecx[0, 1] = MModel.CenterXVec.coor[1];
+                vecx[0, 2] = MModel.CenterXVec.coor[2];
+                vecx[0, 3] = MModel.CenterXVec.coor[3];
+
+                fi = Math.Atan(-1 * (vecz[0, 1] / vecz[0, 0]));
+                fi *= (MModel.CenterZVec.coor[2] > 0) ? (1) : (-1);
+                op = new double[4, 4];
+                op[3, 3] = 1;
+                op[2, 2] = 1;
+                op[0, 0] = Math.Cos(fi);
+                op[1, 1] = Math.Cos(fi);
+                op[0, 1] = -1 * Math.Sin(fi);
+                op[1, 0] = Math.Sin(fi);
+                temp = Matrixes.Multiply(temp, op);
+                vecz = Matrixes.Multiply(vecz, op);
+                vecy = Matrixes.Multiply(vecy, op);
+                vecx = Matrixes.Multiply(vecx, op);
+
+                fi = Math.Atan(-1 * (vecz[0, 0] / vecz[0, 2]));
+                fi *= (vecz[0, 0] > 0) ? (-1) : (1);
+                op = new double[4, 4];
+                op[3, 3] = 1;
+                op[1, 1] = 1;
+                op[0, 0] = Math.Cos(fi);
+                op[2, 2] = Math.Cos(fi);
+                op[0, 2] = -1 * Math.Sin(fi);
+                op[2, 0] = Math.Sin(fi);
+                temp = Matrixes.Multiply(temp, op);
+                vecz = Matrixes.Multiply(vecz, op);
+                vecy = Matrixes.Multiply(vecy, op);
+                vecx = Matrixes.Multiply(vecx, op);
+
+                op = new double[4, 4];
+                op[0, 0] = -1;
+                op[1, 1] = -1;
+                op[2, 2] = -1;
+                op[3, 3] = 1;
+                temp = Matrixes.Multiply(temp, op);
+                vecz = Matrixes.Multiply(vecz, op);
+                vecy = Matrixes.Multiply(vecy, op);
+                vecx = Matrixes.Multiply(vecx, op);
+
+                ///*
+                fi = Math.Atan(-1 * (vecy[0, 0] / vecy[0, 1]));
+                fi *= (vecy[0, 0] > 0) ? (-1) : (1);
+                op = new double[4, 4];
+                op[3, 3] = 1;
+                op[2, 2] = 1;
+                op[0, 0] = Math.Cos(fi);
+                op[1, 1] = Math.Cos(fi);
+                op[0, 1] = -1 * Math.Sin(fi);
+                op[1, 0] = Math.Sin(fi);
+                temp = Matrixes.Multiply(temp, op);
+                vecz = Matrixes.Multiply(vecz, op);
+                vecy = Matrixes.Multiply(vecy, op);
+                vecx = Matrixes.Multiply(vecx, op);
+
+                /*op = new double[4, 4];
+                op[0, 0] = -1;
+                op[1, 1] = 1;
+                op[2, 2] = -1;
+                op[3, 3] = 1;
+                temp = Matrixes.Multiply(temp, op);
+                vecz = Matrixes.Multiply(vecz, op);
+                vecy = Matrixes.Multiply(vecy, op);
+                vecx = Matrixes.Multiply(vecx, op);//*/
+
+                if (vecz[0, 2] < 0 || Math.Abs(vecz[0, 1]) > 0.001 || Math.Abs(vecz[0, 0]) > 0.001 || vecy[0, 1] < 0 || Math.Abs(vecy[0, 2]) > 0.001 || Math.Abs(vecy[0, 0]) > 0.001 || vecx[0, 0] < 0 || Math.Abs(vecx[0, 1]) > 0.001 || Math.Abs(vecx[0, 2]) > 0.001)
+                {
+                    // Console.WriteLine();
+                }
+
+                for (j = 0; j < temp.Length/4; j++)
+                {
+                    temp[j, 0] += View.panel1.Width / 2;
+                    temp[j, 1] += View.panel1.Height / 2;
+                }
+
+                for (j = 0; j < temp.Length / 4; j++)
+                {
+                    Cur.DrawEllipse(BlackPen, (int)temp[j, 0] - 1, (int)temp[j, 1] - 1, 2, 2);
+                    //if ((((temp[MModel.FigsSides[i][j][1], 0] - temp[MModel.FigsSides[i][j][0], 0]) * (temp[MModel.FigsSides[i][j][2], 1] - temp[MModel.FigsSides[i][j][0], 1])) - ((temp[MModel.FigsSides[i][j][1], 1] - temp[MModel.FigsSides[i][j][0], 1]) * (temp[MModel.FigsSides[i][j][2], 0] - temp[MModel.FigsSides[i][j][1], 0]))) >= 0 && Roberts)
+                    //continue;
+                    //if()
                 }
                 // View.panel1.Refresh();
 
